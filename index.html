@@ -1,0 +1,939 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FindIt | JRMSU Lost & Found System</title>
+<meta name="description" content="FindIt - Official Information Systems Project Portfolio for JRMSU Main Campus Lost & Found System.">
+
+<!-- Open Graph / Facebook / Messenger Link Preview -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="http://findit-jrmsu.freedev.app">
+<meta property="og:title" content="FindIt | JRMSU Lost & Found System">
+<meta property="og:description" content="Official IS Project Portfolio for JRMSU Main Campus Lost & Found System.">
+<meta property="og:image" content="images/logo.gif">
+
+<link rel="icon" href="images/logo.gif">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Outfit:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="app-canvas">
+  <div class="vert-label vert-left">JRMSU Main Campus &bull; 2026-2027</div>
+  <div class="vert-label vert-right">IS Project Management &bull; FindIt</div>
+
+  <div class="app-shell">
+    <nav class="top" aria-label="Main">
+      <div class="wrap">
+        <a class="brand" href="#home"><img class="logo" src="images/logo.gif" alt="FindIt logo"><span id="brand"></span></a>
+        <ul>
+          <li><a href="#home">Home</a></li>
+          <li><a href="#schedule">Project Schedule</a></li>
+          <li><a href="#project-team">Project Team</a></li>
+          <li><a href="#communication">Project Communication Plan</a></li>
+        </ul>
+        <button class="nav-icon-btn" title="Figma Prototype / Quick Link" onclick="window.open(PROJECT.figmaUrl || '#', '_blank')">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+        </button>
+      </div>
+    </nav>
+
+    <main>
+<div class="page-section" id="home">
+<div id="overview">
+  <header class="hero" id="top">
+    <div class="wrap">
+      <div class="hero-grid">
+        <div class="panel">
+          <span class="pill-tag">IS Project Portfolio</span>
+          <h1 id="h-title"></h1>
+          <p class="lead" id="h-tagline"></p>
+          <dl class="facts" id="facts"></dl>
+          <div id="h-link" class="hero-actions"></div>
+        </div>
+        <div class="strip-box" aria-label="Schedule at a glance">
+          <div class="strip-top">
+            <h2>Schedule at a glance</h2>
+            <span class="status-pill">Critical Path Method</span>
+          </div>
+          <div id="strip"></div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <section class="block">
+    <div class="wrap">
+      <h2>Project overview</h2>
+      <div class="cols">
+        <div id="ov-left"></div>
+        <div id="ov-right"></div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<section class="block" id="features">
+  <div class="wrap">
+    <h2>Proposed features</h2>
+    <div class="callout" id="scope-note"></div>
+    <div class="feat" id="feat-list"></div>
+    <h3 class="sub">How FindIt would work</h3>
+    <ol class="steps" id="how-list"></ol>
+  </div>
+</section>
+</div><!-- /#home -->
+
+<div class="page-section" id="schedule">
+
+<section class="block" id="wbs">
+  <div class="wrap">
+    <h2>Work Breakdown Structure</h2>
+    <p class="intro">The project is split into phases, and each phase into the activities the team will carry out. Each activity has a WBS code (phase.activity).</p>
+    <div class="wbs" id="wbs-chart"></div>
+  </div>
+</section>
+
+<section class="block" id="sequencing">
+  <div class="wrap">
+    <h2>Activity sequencing</h2>
+    <p class="intro">Each activity starts only after its predecessors finish (finish-to-start). The orange path is the critical path: a delay on any of these activities delays the whole project.</p>
+    <div class="legend" id="net-legend"></div>
+    <div class="net-scroll" id="net"></div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>ID</th><th>Activity</th><th>Predecessors</th><th>Successors</th><th>Relationship</th></tr></thead>
+        <tbody id="seq-body"></tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="durations">
+  <div class="wrap">
+    <h2>Activity duration estimates</h2>
+    <p class="intro">Durations are the team's most likely estimate in working days (Monday to Friday). Slack is how many days an activity can slip without delaying the finish date.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>WBS</th><th>ID</th><th>Activity</th><th>Assigned to</th><th class="num">Duration (days)</th><th>Start</th><th>Finish</th><th class="num">Slack (days)</th><th>Critical</th></tr></thead>
+        <tbody id="dur-body"></tbody>
+        <tfoot><tr id="dur-foot"></tr></tfoot>
+      </table>
+    </div>
+    <p class="note">Dates assume work starts on the project start date and skip weekends. Holidays and class suspensions are not deducted.</p>
+  </div>
+</section>
+
+<section class="block" id="gantt">
+  <div class="wrap">
+    <h2>Gantt chart</h2>
+    <p class="intro">Bars show when each activity runs. Outlined bars are on the critical path.</p>
+    <div class="legend" id="g-legend"></div>
+    <div class="g-scroll"><div class="gantt" id="gantt-chart"></div></div>
+  </div>
+</section>
+
+</div><!-- /#schedule -->
+
+<div class="page-section" id="project-team">
+
+<section class="block" id="assessment">
+  <div class="wrap">
+    <h2>Team member assessment</h2>
+    <p class="intro">Before assigning roles, the team discussed each member's skills and strengths, using the work personalities from the lesson: Deliverer, Prototype, Perfector, Producer, Fixer and Finisher.</p>
+    <div class="table-wrap">
+      <table class="wide">
+        <thead><tr><th>Team member</th><th>Skills / strengths</th><th>Preferred tasks</th><th>Assigned project role</th><th>Work personality</th><th>Reason for assignment</th></tr></thead>
+        <tbody id="assess-body"></tbody>
+      </table>
+    </div>
+    <p class="note" id="lab-note"></p>
+  </div>
+</section>
+
+<section class="block" id="roles">
+  <div class="wrap">
+    <h2>Assigned project team roles</h2>
+    <p class="intro">Each role matches the requirements of the proposed system. Roles may be combined depending on the number of members, but every member has a clearly defined responsibility.</p>
+    <div class="table-wrap">
+      <table class="wide">
+        <thead><tr><th>Project role</th><th>Assigned member</th><th>Major responsibilities</th><th>Expected deliverables</th></tr></thead>
+        <tbody id="roles-body"></tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="orgchart">
+  <div class="wrap">
+    <h2>Project team organizational chart</h2>
+    <p class="intro" id="org-intro"></p>
+    <div class="org" id="org-chart"></div>
+  </div>
+</section>
+
+<section class="block" id="responsibilities">
+  <div class="wrap">
+    <h2>Team members' roles and responsibilities</h2>
+    <p class="intro">What each member is responsible for, the deliverables they own, and the schedule activities they lead or support.</p>
+    <div class="resp-grid" id="resp-list"></div>
+    <h3 class="sub">Roles connected to the project schedule</h3>
+    <p class="intro">Every activity in the schedule has one responsible member and the members who support them.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>ID</th><th>Project activity</th><th>Responsible member</th><th>Role</th><th>Supporting member/s</th></tr></thead>
+        <tbody id="matrix-body"></tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="team">
+  <div class="wrap">
+    <h2>Team and contact</h2>
+    <p class="intro" id="team-intro"></p>
+    <figure class="team-photo">
+      <img src="images/logo.gif" alt="The FindIt project team">
+      <figcaption>The FindIt team</figcaption>
+    </figure>
+    <div class="team" id="team-list"></div>
+    <div class="contact" id="contact"></div>
+  </div>
+</section>
+
+</div><!-- /#project-team -->
+
+<div class="page-section" id="communication">
+
+<section class="block" id="comm-plan">
+  <div class="wrap">
+    <h2>Project Communication Plan</h2>
+    <p class="intro" id="comm-intro"></p>
+    <div class="callout" id="comm-note"></div>
+  </div>
+</section>
+
+<section class="block" id="stakeholders">
+  <div class="wrap">
+    <h2>1. Project stakeholders</h2>
+    <p class="intro">These are the people and groups who take part in, are affected by, or have an interest in the FindIt project.</p>
+    <div class="table-wrap">
+      <table class="wide">
+        <thead><tr><th>Stakeholders</th><th>Name / group</th><th>Role in the project</th><th>Type</th></tr></thead>
+        <tbody id="stake-body"></tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="comm-objectives">
+  <div class="wrap">
+    <h2>2. Communication objectives</h2>
+    <p class="intro">What the team wants to achieve through its communication throughout the project.</p>
+    <ol class="steps" id="comm-obj-list"></ol>
+  </div>
+</section>
+
+<section class="block" id="comm-matrix">
+  <div class="wrap">
+    <h2>3. Project communication matrix</h2>
+    <p class="intro">Who receives which information, how it is shared, how often, and which team member is responsible for sharing it.</p>
+    <div class="table-wrap">
+      <table class="wide">
+        <thead><tr><th>Stakeholders</th><th>Information to share</th><th>Communication method</th><th>Frequency</th><th>Responsible person</th></tr></thead>
+        <tbody id="cm-body"></tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="comm-methods">
+  <div class="wrap">
+    <h2>4. Types and forms of communication</h2>
+    <p class="intro">The communication methods the team will use and what each one is for.</p>
+    <div class="table-wrap">
+      <table class="wide">
+        <thead><tr><th>Communication method</th><th>Purpose</th><th>Type</th><th>Form</th></tr></thead>
+        <tbody id="meth-body"></tbody>
+      </table>
+    </div>
+    <p class="note" id="lab4-note"></p>
+  </div>
+</section>
+
+</div><!-- /#communication -->
+
+</main>
+
+<footer>
+  <div class="wrap" id="footer"></div>
+</footer>
+</div> <!-- /.app-shell -->
+</div> <!-- /.app-canvas -->
+
+<!-- Image Lightbox & Avatar Crop Modal -->
+<div id="img-modal" class="modal-overlay" aria-hidden="true">
+  <div class="modal-content">
+    <button class="modal-close" id="modal-close-btn" aria-label="Close modal">&times;</button>
+    <div class="modal-body">
+      <div class="img-container">
+        <img id="modal-img" src="" alt="Enlarged view">
+      </div>
+      <div class="modal-controls" id="modal-controls">
+        <label for="crop-slider"><strong>Adjust Avatar Crop / Position:</strong></label>
+        <input type="range" id="crop-slider" min="0" max="100" value="42">
+        <div class="zoom-btns">
+          <button id="zoom-out-btn" class="btn-sm">- Zoom Out</button>
+          <button id="reset-zoom-btn" class="btn-sm">Reset</button>
+          <button id="zoom-in-btn" class="btn-sm">+ Zoom In</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ==========================================================
+   EDIT THIS SECTION ONLY.
+   Everything on the page (WBS, sequencing diagram, duration
+   table, Gantt chart, dates) is generated from this data.
+   ========================================================== */
+const PROJECT = {
+  title: "FindIt",
+  short: "FindIt",
+  tagline: "A proposed digital Lost & Found platform for JRMSU Main Campus that organizes lost and found item reports, making it easier for students to search for and potentially recover their belongings.",
+  startDate: "2026-10-05",              // must be a weekday, format YYYY-MM-DD
+  course: "Information Systems Project Management",
+  school: "Jose Rizal Memorial State University, Main Campus",
+  term: "1st Semester, A.Y. 2026-2027",
+  figmaUrl: "",                         // paste your Figma prototype link here (leave empty to hide the button)
+  problem: "When students lose items such as a phone, ID, bag, wallet, keys or school materials, they ask classmates, post in random group chats or search around campus. There is no single, organized place where students can check items reported as lost or found.",
+  solution: "FindIt is a proposed school Lost & Found Management System. It is designed to give students one organized platform for reporting, searching and managing lost and found items, with a claim and contact process to help coordinate an item's return.",
+  objectives: [
+    "Give students one place to report items they lost or found.",
+    "Make it easier to search reported items by category and status.",
+    "Provide item details and a claim and contact process for coordinating returns.",
+    "Let students view and manage the items they reported."
+  ],
+  deliverables: [
+    "Project schedule plan (WBS, sequencing, durations, Gantt chart)",
+    "Requirements and list of proposed features",
+    "FindIt Figma UI prototype",
+    "Project documentation",
+    "Project portfolio website and final presentation"
+  ]
+};
+
+const SCOPE_NOTE = "FindIt is currently a Figma UI prototype, not a fully developed working system. The features below are proposed features that show how the system would work if it were developed.";
+
+const FEATURES = [
+  { name: "Dashboard",    desc: "An overview of activity, with recently reported lost and found items." },
+  { name: "Lost Items",   desc: "Browse items that students reported as lost." },
+  { name: "Found Items",  desc: "Browse items that someone reported as found." },
+  { name: "Report Lost",  desc: "Submit details about something you lost." },
+  { name: "Report Found", desc: "Submit details about something you found." },
+  { name: "Search",       desc: "Look up items and narrow results with filters such as category and status." },
+  { name: "Item Details", desc: "See the full information for an item and proceed to claim it." },
+  { name: "My Reports",   desc: "View the items you personally reported." },
+  { name: "Messages",     desc: "Communicate with other users about a specific item." },
+  { name: "Profile",      desc: "Student account and user information." }
+];
+
+const HOW = [
+  "A student loses their ID, opens FindIt and selects Report Lost.",
+  "They enter the details of the ID, and the report appears in the system.",
+  "Another student finds an ID, selects Report Found and posts the details.",
+  "The owner searches FindIt and may identify their item.",
+  "They use the claim and contact process to coordinate its return."
+];
+
+const TEAM = [
+  { name: "John Chandler N. Caermare", key:"caermare", role: "Project Manager / Team Leader", email: "caermare.johnchandler@gmail.com", photo: "images/c.jpg" },
+  { name: "Earl Lawrence A. Dini-ay", key:"diniay", role: "System Analyst", email: "diniay.earllawrence@gmail.com", photo: "images/d.jpg" },
+  { name: "Daven Nathaniel Tan", key:"tan", role: "UI/UX Designer", email: "tan.davennathaniel@gmail.com", photo: "images/n.jpg" },
+  { name: "Leomer T. Benedicto", key:"benedicto", role: "Documentation Lead", email: "benedicto.leomer@gmail.com", photo: "images/b.jpg" },
+  { name: "Lev Anthony S. Pausal", key:"pausal", role: "Web and Presentation / QA Tester", email: "pausal.levanthony@gmail.com", photo: "images/p.jpg" }
+];
+
+// id: unique letter, dur: working days, pred: ids that must finish first, who: role
+const PHASES = [
+  { name: "Project initiation", tasks: [
+    { id:"A", name:"Define the problem and project scope",     dur:2, pred:[],    who:"Project Manager / Team Leader" },
+    { id:"B", name:"Identify target users and objectives",     dur:2, pred:["A"], who:"System Analyst" },
+    { id:"C", name:"Prepare project schedule plan",            dur:3, pred:["A"], who:"Project Manager / Team Leader" }
+  ]},
+  { name: "Requirements and analysis", tasks: [
+    { id:"D", name:"Gather student needs (survey and interviews)", dur:4, pred:["B"], who:"System Analyst" },
+    { id:"E", name:"Define proposed features and user flows",  dur:3, pred:["D"], who:"System Analyst" },
+    { id:"F", name:"Write system requirements",                dur:3, pred:["E"], who:"System Analyst" }
+  ]},
+  { name: "UI/UX design in Figma", tasks: [
+    { id:"G", name:"Create wireframes for all screens",        dur:5, pred:["F"],     who:"UI/UX Designer" },
+    { id:"H", name:"Set up style guide and components",        dur:3, pred:["E"],     who:"UI/UX Designer" },
+    { id:"I", name:"Design high-fidelity screens",             dur:8, pred:["G","H"], who:"UI/UX Designer" },
+    { id:"J", name:"Build clickable Figma prototype",          dur:4, pred:["I"],     who:"UI/UX Designer" }
+  ]},
+  { name: "Review and revision", tasks: [
+    { id:"K", name:"Usability review with students",           dur:3, pred:["J"], who:"System Analyst" },
+    { id:"L", name:"Revise design based on feedback",          dur:3, pred:["K"], who:"UI/UX Designer" }
+  ]},
+  { name: "Documentation and presentation", tasks: [
+    { id:"M", name:"Write project documentation",              dur:5, pred:["J"],     who:"Documentation Lead" },
+    { id:"N", name:"Build the project portfolio website",      dur:3, pred:["C","J"], who:"Web and Presentation" },
+    { id:"O", name:"Final presentation",                       dur:2, pred:["L","M","N"], who:"All members" }
+  ]}
+];
+
+/* ===== Laboratory Exercise 3: Project Team Formation ===== */
+const LAB3 = { title: "Laboratory Exercise 3 \u2013 Project Team Formation", date: "10/09/26", section: "BSIS 3rd Year" };
+
+const ASSESS = [
+  { key:"caermare", skills:"Leadership, project planning and scheduling (WBS and critical path), coordination, communication",
+    tasks:"Defining scope, preparing the schedule plan, monitoring progress, leading meetings",
+    role:"Project Manager / Team Leader", type:"Deliverer",
+    reason:"John set the scope and schedule plan and keeps work on track. Fits leading, monitoring progress and reporting." },
+  { key:"diniay", skills:"Requirements gathering, survey and interview skills, analysis, defining user flows, technical writing",
+    tasks:"Gathering student needs, defining features and user flows, writing requirements, leading the usability review",
+    role:"System Analyst", type:"Fixer",
+    reason:"Earl turns the problem into clear needs, features and requirements. Fits analyzing what users need." },
+  { key:"tan", skills:"UI/UX design, wireframing, visual design, Figma prototyping, usability and consistency",
+    tasks:"Making wireframes, setting up the style guide, designing screens, building the Figma prototype",
+    role:"UI/UX Designer", type:"Prototype",
+    reason:"Daven builds the visible first version of the idea. FindIt is a Figma prototype, so this fits." },
+  { key:"benedicto", skills:"Writing, organizing information, proofreading, attention to detail",
+    tasks:"Writing the project documentation, compiling team outputs, checking accuracy",
+    role:"Documentation Lead", type:"Perfector",
+    reason:"Leomer handles the documentation and refines details so the team's record is accurate and consistent." },
+  { key:"pausal", skills:"Web page building (HTML, CSS, JavaScript), presentation design, checking for errors",
+    tasks:"Building the portfolio website, preparing the final presentation, checking for mistakes",
+    role:"Web and Presentation", type:"Finisher",
+    reason:"Lev builds the website and final presentation, the last pieces that present the project." }
+];
+
+const ROLES = [
+  { role:"Project Manager / Team Leader", key:"caermare",
+    resp:["Overall project planning and coordination","Monitors progress against the schedule","Facilitates team communication and meetings","Reports to the instructor / stakeholders"],
+    deliv:["Project plan and schedule updates","Progress reports and meeting minutes"] },
+  { role:"System Analyst", key:"diniay",
+    resp:["Gathers and analyzes student needs and requirements","Defines proposed features and user flows","Liaises with students (survey, interviews, usability review)"],
+    deliv:["Requirements document","Feature list and user flows"] },
+  { role:"UI/UX Designer", key:"tan",
+    resp:["Designs the user interface and experience","Creates wireframes and prototypes","Ensures usability and accessibility"],
+    deliv:["Wireframes and mockups","Interactive prototype / style guide"] },
+  { role:"Documentation Lead", key:"benedicto",
+    resp:["Writes and organizes the project documentation","Compiles the requirements, schedule and design outputs into one record","Checks documents for accuracy and consistency"],
+    deliv:["Project documentation","Compiled and proofread document set"] },
+  { role:"Web and Presentation", key:"pausal",
+    resp:["Builds and maintains the project portfolio website","Adds the required Laboratory Exercise 3 sections to the website","Prepares the final presentation"],
+    deliv:["Project portfolio website","Final presentation slides"] },
+  { role:"QA / Tester", key:"pausal",
+    resp:["Checks the Figma prototype and website for errors and inconsistencies","Supports the usability review with students","Records issues and verifies that fixes are made"],
+    deliv:["Prototype and website review checklist","Issue log with review results"] }
+];
+
+const ORG = {
+  lead: { role:"Project Manager / Team Leader", key:"caermare",
+    points:["Overall project planning and coordination","Monitors progress and schedule","Facilitates team communication","Reports to stakeholders"] },
+  members: [
+    { role:"System Analyst", key:"diniay",
+      points:["Gathers and analyzes requirements","Defines features and user flows","Liaises with students","Leads the usability review"] },
+    { role:"UI/UX Designer", key:"tan",
+      points:["Designs user interface and experience","Creates wireframes and prototypes","Ensures usability and accessibility"] },
+    { role:"Documentation Lead", key:"benedicto",
+      points:["Writes the project documentation","Compiles the team's outputs","Checks accuracy and consistency","Supports the final presentation"] },
+    { role:"Web and Presentation & QA / Tester", key:"pausal",
+      points:["Builds the portfolio website","Prepares the final presentation","Checks prototype and website for errors","Reports issues; verifies fixes"] }
+  ]
+};
+
+// who: member key, support: member keys
+const MATRIX = [
+  { act:"Project Initiation",            who:"caermare",  role:"Project Manager / Team Leader", support:["diniay"],            ids:"A, B, C" },
+  { act:"Requirements and Analysis",     who:"diniay",    role:"System Analyst",                support:["caermare"],          ids:"D, E, F" },
+  { act:"UI/UX Design in Figma",         who:"tan",       role:"UI/UX Designer",                support:["diniay"],            ids:"G, H, I, J" },
+  { act:"Usability Review with Students",who:"diniay",    role:"System Analyst",                support:["pausal","tan"],      ids:"K" },
+  { act:"Design Revision",               who:"tan",       role:"UI/UX Designer",                support:["diniay"],            ids:"L" },
+  { act:"Project Documentation",         who:"benedicto", role:"Documentation Lead",            support:["caermare","diniay"], ids:"M" },
+  { act:"Portfolio Website",             who:"pausal",    role:"Web and Presentation",          support:["tan"],               ids:"N" },
+  { act:"Final Presentation",            who:"caermare",  role:"Project Manager / Team Leader", support:"all",                 ids:"O" }
+];
+
+/* ===== Laboratory Exercise 4: Project Communication Plan ===== */
+const LAB4 = { title: "Laboratory Exercise 4 \u2013 Project Communication Plan", section: "BSIS 3rd Year" };
+
+const COMM_INTRO = "This simplified plan explains how the FindIt team will communicate, share information and coordinate with its stakeholders from project initiation to the final presentation.";
+const COMM_NOTE = "Communication follows the same schedule and roles as the rest of this portfolio: the Project Manager / Team Leader coordinates, and each member shares the information that belongs to their own role.";
+
+// key: team member key (shows the member's name); otherwise use name
+const STAKEHOLDERS = [
+  { who:"Project Manager",        key:"caermare",  role:"Leads and coordinates the team, monitors progress against the schedule, facilitates meetings and reports to the instructor.", type:"Internal" },
+  { who:"System Analyst",         key:"diniay",    role:"Gathers student needs, defines features and user flows, writes the requirements and leads the usability review.", type:"Internal" },
+  { who:"UI/UX Designer",         key:"tan",       role:"Designs the wireframes, screens and clickable Figma prototype of FindIt.", type:"Internal" },
+  { who:"Documentation Lead",     key:"benedicto", role:"Writes and compiles the project documentation and checks it for accuracy and consistency.", type:"Internal" },
+  { who:"Web and Presentation / QA Tester", key:"pausal", role:"Builds the portfolio website and final presentation, and checks the prototype and website for errors.", type:"Internal" },
+  { who:"Project Sponsor / Instructor", name:"Course instructor, Information Systems Project Management", role:"Gives direction, reviews and approves deliverables, and evaluates the project.", type:"External" },
+  { who:"Client", name:"JRMSU Main Campus (office that would manage lost and found items)", role:"The proposed owner of the system. Confirms that FindIt fits how lost and found items are handled on campus.", type:"External" },
+  { who:"End Users", name:"JRMSU students", role:"Would use FindIt to report, search and claim lost and found items. Give needs and feedback through the survey, interviews and usability review.", type:"External" }
+];
+
+const COMM_OBJECTIVES = [
+  "To keep team members informed about project progress and upcoming schedule activities.",
+  "To make sure every member understands their role, tasks and deadlines.",
+  "To report project status and deliverables to the instructor (project sponsor) on time.",
+  "To collect clear and timely feedback from students (end users) on their needs and on the FindIt prototype.",
+  "To resolve issues, risks and disagreements quickly so the critical path activities are not delayed.",
+  "To keep project files and documents organized so all members always use the latest version."
+];
+
+// who: member key. to: label or member key
+const COMM_MATRIX = [
+  { to:"Project Manager",    info:"Task progress, issues and risks from each member", method:"Group meeting", freq:"Weekly", who:"all" },
+  { to:"Team Members",       info:"Daily updates, announcements, task reminders and deadlines", method:"Group chat", freq:"Daily", who:"caermare" },
+  { to:"Team Members",       info:"Schedule updates and task assignments (WBS, Gantt chart)", method:"Group meeting", freq:"Weekly", who:"caermare" },
+  { to:"System Analyst",     info:"Student needs, requirements and feature list changes", method:"Group chat and shared documents", freq:"As needed", who:"diniay" },
+  { to:"UI/UX Designer",     info:"Approved features and user flows; design feedback from the usability review", method:"Group chat and shared Figma file", freq:"As needed", who:"diniay" },
+  { to:"Documentation Lead", info:"Finished outputs (requirements, schedule, designs) to compile into the documentation", method:"Shared folder and email", freq:"After each completed phase", who:"caermare" },
+  { to:"Web and Presentation / QA Tester", info:"Final content for the website; errors and issues found in the prototype", method:"Group chat and shared folder", freq:"As needed", who:"tan" },
+  { to:"Project Sponsor / Instructor", info:"Project status, deliverables for checking and questions for approval", method:"Email and face-to-face consultation", freq:"Every milestone or as scheduled by the instructor", who:"caermare" },
+  { to:"Client",             info:"Proposed features, scope and the FindIt prototype for confirmation", method:"Consultation / presentation", freq:"Once per phase or as needed", who:"diniay" },
+  { to:"End Users",          info:"System feedback, needs and usability review results", method:"Interview and survey", freq:"As needed", who:"diniay" }
+];
+
+const COMM_METHODS = [
+  { method:"Group Chat", purpose:"For daily updates, announcements, quick questions and task reminders.", type:"Informal", form:"Written" },
+  { method:"Group Meeting", purpose:"To review task progress against the schedule, discuss issues and agree on the next tasks. Minutes are recorded.", type:"Formal", form:"Verbal (face-to-face or online)" },
+  { method:"Email", purpose:"For official messages and file submissions to the instructor and the client, and for records that need to be kept.", type:"Formal", form:"Written" },
+  { method:"Interview / Survey", purpose:"To gather needs and feedback from students (end users), including the usability review.", type:"Formal", form:"Verbal and written" },
+  { method:"Shared Folder / Shared Files", purpose:"To keep one organized copy of documents, the Figma file and the website so everyone uses the latest version.", type:"Formal", form:"Written / digital" },
+  { method:"Consultation", purpose:"To ask the instructor or client for guidance, approval or clarification on deliverables.", type:"Formal", form:"Verbal (face-to-face)" }
+];
+/* ========================= END OF EDITABLE DATA ========================= */
+
+/* ---------- helpers ---------- */
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const initials = n => n.split(/\s+/).map(w => w[0]).join('').slice(0,2).toUpperCase();
+const cvar = i => `var(--c${i % 6})`;
+
+/* ---------- schedule calculation (critical path method) ---------- */
+const acts = [];
+PHASES.forEach((p, pi) => p.tasks.forEach((t, ti) =>
+  acts.push({ ...t, pred: t.pred || [], phase: pi, wbs: `${pi+1}.${ti+1}` })));
+const byId = {};
+acts.forEach(a => byId[a.id] = a);
+acts.forEach(a => a.succ = []);
+acts.forEach(a => a.pred.forEach(p => byId[p].succ.push(a.id)));
+
+function calcEF(a){
+  if (a.ef !== undefined) return a.ef;
+  a.es = Math.max(0, ...a.pred.map(p => calcEF(byId[p])));
+  a.ef = a.es + a.dur;
+  return a.ef;
+}
+acts.forEach(calcEF);
+const TOTAL = Math.max(...acts.map(a => a.ef));
+
+function calcLS(a){
+  if (a.ls !== undefined) return a.ls;
+  a.lf = a.succ.length ? Math.min(...a.succ.map(s => calcLS(byId[s]))) : TOTAL;
+  a.ls = a.lf - a.dur;
+  return a.ls;
+}
+acts.forEach(calcLS);
+acts.forEach(a => { a.slack = a.ls - a.es; a.crit = a.slack === 0; });
+
+function calcLevel(a){
+  if (a.level !== undefined) return a.level;
+  a.level = a.pred.length ? 1 + Math.max(...a.pred.map(p => calcLevel(byId[p]))) : 0;
+  return a.level;
+}
+acts.forEach(calcLevel);
+
+/* ---------- dates (working days only) ---------- */
+const [sy, sm, sd] = PROJECT.startDate.split('-').map(Number);
+const START = new Date(sy, sm - 1, sd);
+function workday(k){
+  const d = new Date(START);
+  while (d.getDay() === 0 || d.getDay() === 6) d.setDate(d.getDate() + 1);
+  let c = 0;
+  while (c < k){ d.setDate(d.getDate() + 1); if (d.getDay() !== 0 && d.getDay() !== 6) c++; }
+  return d;
+}
+const fmt = d => d.toLocaleDateString('en-PH', { month:'short', day:'numeric' });
+const fmtY = d => d.toLocaleDateString('en-PH', { month:'short', day:'numeric', year:'numeric' });
+const startOf = a => workday(a.es);
+const endOf = a => workday(a.ef - 1);
+const critIds = acts.filter(a => a.crit).sort((a,b) => a.es - b.es).map(a => a.id);
+
+/* ---------- page header ---------- */
+document.title = `${PROJECT.title} | JRMSU Lost & Found System`;
+$('#brand').textContent = PROJECT.short || PROJECT.title;
+$('#h-title').textContent = PROJECT.title;
+$('#h-tagline').textContent = PROJECT.tagline;
+$('#facts').innerHTML = [
+  ['Start', fmtY(workday(0))],
+  ['Finish', fmtY(workday(TOTAL - 1))],
+  ['Duration', `${TOTAL} working days`],
+  ['Activities', acts.length],
+  ['Status', 'Figma prototype']
+].map(([k, v]) => `<div><dt>${k}</dt><dd>${esc(v)}</dd></div>`).join('');
+
+/* hero strip: mini schedule with activity names, week numbers and durations */
+(function(){
+  const weeks = Math.ceil(TOTAL / 5);
+  const head = `<div class="strip-head"><div></div><div class="strip-weeks">` +
+    Array.from({length: weeks}, (_, i) => `<span>W${i+1}</span>`).join('') +
+    `</div></div>`;
+  const rows = acts.map((a, i) => `
+    <div class="strip-line">
+      <div class="strip-name" title="${esc(a.name)}"><b>${a.id}</b>${esc(a.name)}</div>
+      <div class="strip-track">
+        <div class="strip-bar" title="${esc(a.id)}: ${fmt(startOf(a))} to ${fmt(endOf(a))} (${a.dur} days)"
+          style="left:${a.es/TOTAL*100}%;width:${a.dur/TOTAL*100}%;background:${cvar(a.phase)};animation-delay:${i*45}ms">${a.dur}d</div>
+      </div>
+    </div>`).join('');
+  const s = $('#strip');
+  s.style.setProperty('--weeks', weeks);
+  s.innerHTML = head + rows;
+})();
+
+/* ---------- overview ---------- */
+$('#ov-left').innerHTML = `
+  <h3>The problem</h3><p>${esc(PROJECT.problem)}</p>
+  <h3>Our solution</h3><p>${esc(PROJECT.solution)}</p>`;
+$('#ov-right').innerHTML = `
+  <h3>Objectives</h3><ul>${PROJECT.objectives.map(o => `<li>${esc(o)}</li>`).join('')}</ul>
+  <h3>Deliverables</h3><ul>${PROJECT.deliverables.map(o => `<li>${esc(o)}</li>`).join('')}</ul>`;
+
+/* ---------- features ---------- */
+$('#scope-note').textContent = SCOPE_NOTE;
+$('#feat-list').innerHTML = FEATURES.map(f => `<article><h3>${esc(f.name)}</h3><p>${esc(f.desc)}</p></article>`).join('');
+$('#how-list').innerHTML = HOW.map(s => `<li>${esc(s)}</li>`).join('');
+if (PROJECT.figmaUrl) $('#h-link').innerHTML = `<a class="btn" href="${esc(PROJECT.figmaUrl)}" target="_blank" rel="noopener">View the Figma prototype</a>`;
+
+/* ---------- WBS ---------- */
+$('#wbs-chart').innerHTML = `
+  <div class="wbs-root">${esc(PROJECT.title)}</div>
+  <div class="wbs-phases" style="--n:${PHASES.length}">
+    ${PHASES.map((p, pi) => `
+      <div class="wbs-phase">
+        <h3 style="background:${cvar(pi)}">${pi+1}. ${esc(p.name)}</h3>
+        <ul>${acts.filter(a => a.phase === pi).map(a => `<li><b>${a.wbs}</b>${esc(a.name)}</li>`).join('')}</ul>
+      </div>`).join('')}
+  </div>`;
+
+/* ---------- activity sequencing: network diagram ---------- */
+(function(){
+  const W = 176, H = 64, GX = 56, GY = 16, PAD = 14;
+  const levels = [];
+  acts.forEach(a => (levels[a.level] = levels[a.level] || []).push(a));
+  const maxRows = Math.max(...levels.map(c => c.length));
+  const colH = maxRows * H + (maxRows - 1) * GY;
+  levels.forEach((col, li) => {
+    const off = (colH - (col.length * H + (col.length - 1) * GY)) / 2;
+    col.forEach((a, i) => { a.x = PAD + li * (W + GX); a.y = PAD + off + i * (H + GY); });
+  });
+  const svgW = PAD * 2 + levels.length * W + (levels.length - 1) * GX;
+  const svgH = PAD * 2 + colH;
+
+  const wrap = (s, n) => {
+    const lines = [''];
+    s.split(' ').forEach(w => {
+      const cur = lines[lines.length - 1];
+      if (cur && (cur + ' ' + w).length > n) lines.push(w);
+      else lines[lines.length - 1] = (cur ? cur + ' ' : '') + w;
+    });
+    if (lines.length > 2){ lines[1] = lines.slice(1).join(' '); lines.length = 2; }
+    if (lines[1] && lines[1].length > n) lines[1] = lines[1].slice(0, n - 1) + '\u2026';
+    return lines;
+  };
+
+  const edges = [];
+  acts.forEach(a => a.pred.forEach(pid => {
+    const p = byId[pid];
+    const crit = a.crit && p.crit && a.es === p.ef;
+    const x1 = p.x + W, y1 = p.y + H/2, x2 = a.x, y2 = a.y + H/2;
+    edges.push({ crit, d: `M${x1},${y1} C${x1+28},${y1} ${x2-28},${y2} ${x2},${y2}` });
+  }));
+
+  const boxes = acts.map(a => {
+    const lines = wrap(a.name, 25);
+    return `<g><title>${esc(a.id)}: ${esc(a.name)} (${a.dur} days)</title>
+      <rect class="n-box ${a.crit ? 'crit' : ''}" x="${a.x}" y="${a.y}" width="${W}" height="${H}" rx="6"/>
+      <rect x="${a.x}" y="${a.y}" width="6" height="${H}" rx="3" fill="${cvar(a.phase)}"/>
+      <text class="n-id" x="${a.x+16}" y="${a.y+18}">${esc(a.id)}  \u00b7  ${a.dur} days</text>
+      ${lines.map((l, i) => `<text class="n-txt" x="${a.x+16}" y="${a.y+35+i*14}">${esc(l)}</text>`).join('')}
+    </g>`;
+  }).join('');
+
+  $('#net').innerHTML = `<svg width="${svgW}" height="${svgH}" viewBox="0 0 ${svgW} ${svgH}" role="img"
+      aria-label="Network diagram showing the order of project activities">
+    <defs>
+      <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" style="fill:var(--line-strong)"/></marker>
+      <marker id="ahc" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" style="fill:var(--crit)"/></marker>
+    </defs>
+    ${edges.filter(e => !e.crit).map(e => `<path class="edge" d="${e.d}" marker-end="url(#ah)"/>`).join('')}
+    ${edges.filter(e => e.crit).map(e => `<path class="edge crit" d="${e.d}" marker-end="url(#ahc)"/>`).join('')}
+    ${boxes}
+  </svg>`;
+
+  $('#net-legend').innerHTML =
+    `<span><i class="sw critline"></i> Critical path: ${critIds.join(' \u2192 ')}</span>` +
+    PHASES.map((p, i) => `<span><i class="sw" style="background:${cvar(i)}"></i>${esc(p.name)}</span>`).join('');
+
+  $('#seq-body').innerHTML = acts.map(a => `<tr class="${a.crit ? 'crit-row' : ''}">
+    <td><b>${a.id}</b></td><td>${esc(a.name)}</td>
+    <td>${a.pred.length ? a.pred.join(', ') : 'None (start)'}</td>
+    <td>${a.succ.length ? a.succ.join(', ') : 'None (end)'}</td>
+    <td>Finish-to-start</td></tr>`).join('');
+})();
+
+/* ---------- duration table ---------- */
+$('#dur-body').innerHTML = acts.map(a => `<tr class="${a.crit ? 'crit-row' : ''}">
+  <td>${a.wbs}</td><td><b>${a.id}</b></td><td>${esc(a.name)}</td><td>${esc(a.who)}</td>
+  <td class="num">${a.dur}</td><td>${fmt(startOf(a))}</td><td>${fmt(endOf(a))}</td>
+  <td class="num">${a.slack}</td><td>${a.crit ? '<span class="tag">Critical</span>' : ''}</td></tr>`).join('');
+$('#dur-foot').innerHTML = `<td colspan="4">Total project duration (longest path)</td>
+  <td class="num">${TOTAL}</td><td>${fmt(workday(0))}</td><td>${fmt(workday(TOTAL-1))}</td><td colspan="2"></td>`;
+
+/* ---------- Gantt chart ---------- */
+(function(){
+  const weeks = Math.ceil(TOTAL / 5);
+  let html = `<div class="g-row g-head"><div class="g-label">Activity</div><div class="g-track">` +
+    Array.from({length: weeks}, (_, i) => `<span><b>Week ${i+1}</b>${fmt(workday(i*5))}</span>`).join('') +
+    `</div></div>`;
+  PHASES.forEach((p, pi) => {
+    const list = acts.filter(a => a.phase === pi);
+    const s = Math.min(...list.map(a => a.es)), e = Math.max(...list.map(a => a.ef));
+    html += `<div class="g-row g-phase"><div class="g-label">${pi+1}. ${esc(p.name)}</div>
+      <div class="g-track"><div class="g-sum" style="left:${s/TOTAL*100}%;width:${(e-s)/TOTAL*100}%;background:${cvar(pi)}"></div></div></div>`;
+    list.forEach(a => {
+      html += `<div class="g-row"><div class="g-label" title="${esc(a.name)}"><b>${a.id}</b>${esc(a.name)}</div>
+        <div class="g-track"><div class="g-bar ${a.crit ? 'crit' : ''}"
+          style="left:${a.es/TOTAL*100}%;width:${a.dur/TOTAL*100}%;background:${cvar(a.phase)}"
+          title="${esc(a.id)}: ${fmt(startOf(a))} to ${fmt(endOf(a))} (${a.dur} days)">${a.dur}d</div></div></div>`;
+    });
+  });
+  const g = $('#gantt-chart');
+  g.style.setProperty('--weeks', weeks);
+  g.innerHTML = html;
+  $('#g-legend').innerHTML =
+    PHASES.map((p, i) => `<span><i class="sw" style="background:${cvar(i)}"></i>${esc(p.name)}</span>`).join('') +
+    `<span><i class="sw" style="outline:2px solid var(--crit);outline-offset:1px;background:var(--line-strong)"></i>Critical path activity</span>`;
+})();
+
+/* ---------- team ---------- */
+$('#team-intro').textContent = `${PROJECT.course} \u2022 ${PROJECT.term}`;
+$('#team-list').innerHTML = TEAM.map((m, i) => `
+  <article class="member">
+    <div class="avatar" style="background:${cvar(i)}" aria-hidden="true">
+      ${m.photo ? `<img src="${esc(m.photo)}" alt="${esc(m.name)}">` : esc(initials(m.name))}
+    </div>
+    <h3>${esc(m.name)}</h3><p>${esc(m.role)}</p>
+    <a href="mailto:${esc(m.email)}">${esc(m.email)}</a>
+  </article>`).join('');
+$('#contact').innerHTML = `<b>Questions about this project?</b><br>Email any team member above, or write to the project manager at
+  <a href="mailto:${esc(TEAM[0].email)}">${esc(TEAM[0].email)}</a>.`;
+$('#footer').textContent = `${PROJECT.title} \u2022 ${PROJECT.course} \u2022 ${PROJECT.school} \u2022 ${PROJECT.term}`;
+
+
+/* ---------- Laboratory Exercise 3 sections ---------- */
+const MEM = {};
+TEAM.forEach(m => MEM[m.key] = m);
+// "Caermare, John Chandler" style, as written in the lab exercise
+const lastFirst = m => { const w = m.name.split(' '); const last = w[w.length-1]; const first = w.slice(0, -1).filter(x => !/^[A-Z]\.$/.test(x)).join(' '); return `${last}, ${first}`; };
+const lf = k => esc(lastFirst(MEM[k]));
+const ul = a => `<ul class="cell-list">${a.map(x => `<li>${esc(x)}</li>`).join('')}</ul>`;
+
+$('#assess-body').innerHTML = ASSESS.map(a => `<tr>
+  <td><b>${lf(a.key)}</b></td><td>${esc(a.skills)}</td><td>${esc(a.tasks)}</td>
+  <td><b>${esc(a.role)}</b></td><td><span class="tag type">${esc(a.type)}</span></td><td>${esc(a.reason)}</td></tr>`).join('');
+$('#lab-note').textContent = `${LAB3.title} \u2022 ${LAB3.section} \u2022 ${LAB3.date}`;
+
+$('#roles-body').innerHTML = ROLES.map(r => `<tr>
+  <td><b>${esc(r.role)}</b></td><td>${lf(r.key)}</td><td>${ul(r.resp)}</td><td>${ul(r.deliv)}</td></tr>`).join('');
+
+(function(){
+  const node = (n, cls) => `<div class="org-node ${cls||''}">
+      <h3>${esc(n.role)}</h3><b class="org-name">${lf(n.key)}</b>${ul(n.points)}</div>`;
+  $('#org-intro').textContent = `Project: ${PROJECT.title}. The Project Manager / Team Leader coordinates the team, and each member below owns one area of the project.`;
+  $('#org-chart').innerHTML = `
+    <div class="org-top">${node(ORG.lead, 'lead')}</div>
+    <div class="org-stem"></div>
+    <div class="org-kids">${ORG.members.map((m, i) => `<div class="org-kid" style="--c:${cvar(i+1)}">${node(m)}</div>`).join('')}</div>`;
+})();
+
+(function(){
+  const lead = {}, supp = {};
+  MATRIX.forEach(m => {
+    (lead[m.who] = lead[m.who] || []).push(m.act);
+    const sup = m.support === 'all' ? TEAM.map(t => t.key).filter(k => k !== m.who) : m.support;
+    sup.forEach(k => (supp[k] = supp[k] || []).push(m.act));
+  });
+  $('#resp-list').innerHTML = TEAM.map((m, i) => {
+    const mine = ROLES.filter(r => r.key === m.key);
+    return `<article class="resp-card" style="--c:${cvar(i)}">
+      <div class="resp-head">
+        <div class="avatar" style="background:${cvar(i)}" aria-hidden="true">${m.photo ? `<img src="${esc(m.photo)}" alt="${esc(m.name)}">` : esc(initials(m.name))}</div>
+        <div><h3>${esc(m.name)}</h3><p>${mine.map(r => esc(r.role)).join(' + ')}</p></div>
+      </div>
+      ${mine.map(r => `<h4>${mine.length > 1 ? esc(r.role) + ': ' : ''}Responsibilities</h4>${ul(r.resp)}
+        <h4>${mine.length > 1 ? esc(r.role) + ': ' : ''}Deliverables</h4>${ul(r.deliv)}`).join('')}
+      <h4>Leads these activities</h4>${ul(lead[m.key] || ['\u2014'])}
+      <h4>Supports</h4>${ul(supp[m.key] || ['\u2014'])}
+    </article>`;
+  }).join('');
+})();
+
+$('#matrix-body').innerHTML = MATRIX.map(m => `<tr>
+  <td><b>${m.ids}</b></td><td><b>${esc(m.act)}</b></td><td>${lf(m.who)}</td><td>${esc(m.role)}</td>
+  <td>${m.support === 'all' ? 'All members' : m.support.map(lf).join('<br>')}</td></tr>`).join('');
+
+/* ---------- Laboratory Exercise 4: Project Communication Plan ---------- */
+(function(){
+  const nm = k => MEM[k] ? lf(k) : esc(k);
+  $('#comm-intro').textContent = COMM_INTRO;
+  $('#comm-note').textContent = COMM_NOTE;
+  $('#stake-body').innerHTML = STAKEHOLDERS.map(s => `<tr>
+    <td><b>${esc(s.who)}</b></td><td>${s.key ? lf(s.key) : esc(s.name)}</td><td>${esc(s.role)}</td>
+    <td><span class="tag type">${esc(s.type)}</span></td></tr>`).join('');
+  $('#comm-obj-list').innerHTML = COMM_OBJECTIVES.map(o => `<li>${esc(o)}</li>`).join('');
+  $('#cm-body').innerHTML = COMM_MATRIX.map(r => `<tr>
+    <td><b>${esc(r.to)}</b></td><td>${esc(r.info)}</td><td>${esc(r.method)}</td><td>${esc(r.freq)}</td>
+    <td>${r.who === 'all' ? '<b>All team members</b><br><span class="muted-role">Each reports on their own tasks</span>' : nm(r.who) + '<br><span class="muted-role">' + esc(MEM[r.who].role) + '</span>'}</td></tr>`).join('');
+  $('#meth-body').innerHTML = COMM_METHODS.map(m => `<tr>
+    <td><b>${esc(m.method)}</b></td><td>${esc(m.purpose)}</td>
+    <td><span class="tag type">${esc(m.type)}</span></td><td>${esc(m.form)}</td></tr>`).join('');
+  $('#lab4-note').textContent = `${LAB4.title} \u2022 ${LAB4.section}`;
+})();
+
+/* ---------- page router ---------- */
+function updatePageRoute(){
+  // Four pages. Old section ids still work as links: they open the right page and scroll to that section.
+  const PAGE_OF = {
+    home:'home', overview:'home', features:'home',
+    schedule:'schedule', wbs:'schedule', sequencing:'schedule', durations:'schedule', gantt:'schedule',
+    'project-team':'project-team', assessment:'project-team', roles:'project-team', orgchart:'project-team',
+    responsibilities:'project-team', team:'project-team',
+    communication:'communication', 'comm-plan':'communication', stakeholders:'communication',
+    'comm-objectives':'communication', 'comm-matrix':'communication', 'comm-methods':'communication'
+  };
+  const hash = (window.location.hash || '#home').replace('#', '') || 'home';
+  const activeId = PAGE_OF[hash] || 'home';
+  const subTarget = (hash !== activeId && PAGE_OF[hash]) ? document.getElementById(hash) : null;
+
+  document.querySelectorAll('.page-section').forEach(sec => {
+    sec.classList.toggle('active', sec.id === activeId);
+  });
+
+  document.querySelectorAll('nav.top ul a').forEach(link => {
+    const href = (link.getAttribute('href') || '').replace('#', '');
+    link.classList.toggle('active', href === activeId);
+  });
+
+  const mainEl = document.querySelector('main');
+  if (subTarget && mainEl) {
+    mainEl.scrollTo({ top: Math.max(subTarget.offsetTop - 12, 0), behavior: 'smooth' });
+  } else if (mainEl) {
+    mainEl.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+}
+
+window.addEventListener('hashchange', updatePageRoute);
+window.addEventListener('DOMContentLoaded', updatePageRoute);
+updatePageRoute();
+
+/* ---------- image lightbox & cropper ---------- */
+(function(){
+  const modal = $('#img-modal');
+  const modalImg = $('#modal-img');
+  const closeBtn = $('#modal-close-btn');
+  const slider = $('#crop-slider');
+  const controls = $('#modal-controls');
+  const zoomInBtn = $('#zoom-in-btn');
+  const zoomOutBtn = $('#zoom-out-btn');
+  const resetZoomBtn = $('#reset-zoom-btn');
+
+  let currentTargetImg = null;
+  let currentZoom = 1;
+
+  function openModal(imgSrc, targetImgEl, isAvatar){
+    modalImg.src = imgSrc;
+    modalImg.style.transform = 'scale(1)';
+    currentZoom = 1;
+    currentTargetImg = targetImgEl;
+
+    if (isAvatar && targetImgEl) {
+      controls.style.display = 'flex';
+      const posMatch = targetImgEl.style.objectPosition ? targetImgEl.style.objectPosition.match(/(\d+)%/) : null;
+      slider.value = posMatch ? posMatch[1] : 42;
+    } else {
+      controls.style.display = 'none';
+    }
+
+    modal.classList.add('active');
+    modal.setAttribute('aria-hidden', 'false');
+  }
+
+  function closeModal(){
+    modal.classList.remove('active');
+    modal.setAttribute('aria-hidden', 'true');
+    currentTargetImg = null;
+  }
+
+  document.addEventListener('click', function(e){
+    const avatarImg = e.target.closest('.avatar img');
+    const teamImg = e.target.closest('.team-photo img');
+
+    if (avatarImg) {
+      openModal(avatarImg.src, avatarImg, true);
+    } else if (teamImg) {
+      openModal(teamImg.src, teamImg, false);
+    }
+  });
+
+  if (slider) {
+    slider.addEventListener('input', function(){
+      if (currentTargetImg) {
+        currentTargetImg.style.objectPosition = `center ${slider.value}%`;
+      }
+    });
+  }
+
+  if (zoomInBtn) {
+    zoomInBtn.addEventListener('click', function(){
+      currentZoom = Math.min(3, currentZoom + 0.25);
+      modalImg.style.transform = `scale(${currentZoom})`;
+    });
+  }
+
+  if (zoomOutBtn) {
+    zoomOutBtn.addEventListener('click', function(){
+      currentZoom = Math.max(0.5, currentZoom - 0.25);
+      modalImg.style.transform = `scale(${currentZoom})`;
+    });
+  }
+
+  if (resetZoomBtn) {
+    resetZoomBtn.addEventListener('click', function(){
+      currentZoom = 1;
+      modalImg.style.transform = `scale(1)`;
+    });
+  }
+
+  if (closeBtn) closeBtn.addEventListener('click', closeModal);
+  if (modal) {
+    modal.addEventListener('click', function(e){
+      if (e.target === modal) closeModal();
+    });
+  }
+  document.addEventListener('keydown', function(e){
+    if (e.key === 'Escape' && modal && modal.classList.contains('active')) closeModal();
+  });
+})();
+</script>
+</body>
+</html>
