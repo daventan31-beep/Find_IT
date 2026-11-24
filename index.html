@@ -261,6 +261,7 @@
         <tbody id="meth-body"></tbody>
       </table>
     </div>
+    <p class="note" id="lab4-note"></p>
   </div>
 </section>
 
@@ -343,7 +344,7 @@
         <tfoot id="sum-foot"></tfoot>
       </table>
     </div>
-
+    <p class="note" id="lab5-note"></p>
   </div>
 </section>
 
@@ -471,7 +472,7 @@ const PHASES = [
 ];
 
 /* ===== Laboratory Exercise 3: Project Team Formation ===== */
-const LAB3 = { title: "Project Team Formation", date: "10/09/26", section: "BSIS 3rd Year" };
+const LAB3 = { title: "Laboratory Exercise 3 \u2013 Project Team Formation", date: "10/09/26", section: "BSIS 3rd Year" };
 
 const ASSESS = [
   { key:"caermare", skills:"Leadership, project planning and scheduling (WBS and critical path), coordination, communication",
@@ -510,7 +511,7 @@ const ROLES = [
     resp:["Writes and organizes the project documentation","Compiles the requirements, schedule and design outputs into one record","Checks documents for accuracy and consistency"],
     deliv:["Project documentation","Compiled and proofread document set"] },
   { role:"Web and Presentation", key:"pausal",
-    resp:["Builds and maintains the project portfolio website","Adds the required Laboratory Exercise 3 sections to the website","Prepares the final presentation"],
+    resp:["Builds and maintains the project portfolio website","Prepares the final presentation"],
     deliv:["Project portfolio website","Final presentation slides"] },
   { role:"QA / Tester", key:"pausal",
     resp:["Checks the Figma prototype and website for errors and inconsistencies","Supports the usability review with students","Records issues and verifies that fixes are made"],
@@ -545,7 +546,7 @@ const MATRIX = [
 ];
 
 /* ===== Laboratory Exercise 4: Project Communication Plan ===== */
-const LAB4 = { title: "Project Communication Plan", section: "BSIS 3rd Year" };
+const LAB4 = { title: "Laboratory Exercise 4 \u2013 Project Communication Plan", section: "BSIS 3rd Year" };
 
 const COMM_INTRO = "This simplified plan explains how the FindIt team will communicate, share information and coordinate with its stakeholders from project initiation to the final presentation.";
 const COMM_NOTE = "Communication follows the same schedule and roles as the rest of this portfolio: the Project Manager / Team Leader coordinates, and each member shares the information that belongs to their own role.";
@@ -597,7 +598,7 @@ const COMM_METHODS = [
 /* ===== Laboratory Exercise 5: Project Budget =====
    Edit quantities, unit costs and sources here. Every total on the page, including the
    Total Budget Summary, is calculated automatically from these numbers. */
-const LAB5 = { title: "Project Budget", section: "BSIS 3rd Year" };
+const LAB5 = { title: "Laboratory Exercise 5 \u2013 Project Budget", section: "BSIS 3rd Year" };
 const BUDGET = {
   workingDaysPerMonth: 22,
   durationMonths: 2,
@@ -894,7 +895,7 @@ const ul = a => `<ul class="cell-list">${a.map(x => `<li>${esc(x)}</li>`).join('
 $('#assess-body').innerHTML = ASSESS.map(a => `<tr>
   <td><b>${lf(a.key)}</b></td><td>${esc(a.skills)}</td><td>${esc(a.tasks)}</td>
   <td><b>${esc(a.role)}</b></td><td><span class="tag type">${esc(a.type)}</span></td><td>${esc(a.reason)}</td></tr>`).join('');
-$('#lab-note').textContent = `${LAB3.title} \u2022 ${LAB3.section} \u2022 ${LAB3.date}`;
+$('#lab-note').textContent = `${LAB3.section} \u2022 ${LAB3.date}`;
 
 $('#roles-body').innerHTML = ROLES.map(r => `<tr>
   <td><b>${esc(r.role)}</b></td><td>${lf(r.key)}</td><td>${ul(r.resp)}</td><td>${ul(r.deliv)}</td></tr>`).join('');
@@ -950,6 +951,7 @@ $('#matrix-body').innerHTML = MATRIX.map(m => `<tr>
   $('#meth-body').innerHTML = COMM_METHODS.map(m => `<tr>
     <td><b>${esc(m.method)}</b></td><td>${esc(m.purpose)}</td>
     <td><span class="tag type">${esc(m.type)}</span></td><td>${esc(m.form)}</td></tr>`).join('');
+  $('#lab4-note').textContent = `${LAB4.section}`;
 })();
 
 /* ---------- Laboratory Exercise 5: Project Budget ---------- */
@@ -1017,6 +1019,7 @@ $('#matrix-body').innerHTML = MATRIX.map(m => `<tr>
 
   $('#bud-intro').textContent = BUDGET.intro;
   $('#bud-note').textContent = BUDGET.note;
+  $('#lab5-note').textContent = `${LAB5.section}`;
 })();
 
 /* ---------- page router ---------- */
