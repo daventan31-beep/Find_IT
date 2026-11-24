@@ -34,6 +34,7 @@
           <li><a href="#schedule">Project Schedule</a></li>
           <li><a href="#project-team">Project Team</a></li>
           <li><a href="#communication">Project Communication Plan</a></li>
+          <li><a href="#budget">Project Budget</a></li>
         </ul>
         <button class="nav-icon-btn" title="Figma Prototype / Quick Link" onclick="window.open(PROJECT.figmaUrl || '#', '_blank')">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
@@ -265,6 +266,89 @@
 </section>
 
 </div><!-- /#communication -->
+
+<div class="page-section" id="budget">
+
+<section class="block" id="budget-intro">
+  <div class="wrap">
+    <h2>Project Budget</h2>
+    <p class="intro" id="bud-intro"></p>
+    <div class="callout" id="bud-note"></div>
+  </div>
+</section>
+
+<section class="block" id="hr-budget">
+  <div class="wrap">
+    <h2>1. Human resources</h2>
+    <p class="intro">Each team member is paid only for the days they are responsible for in the project schedule (activity days &times; daily rate).</p>
+    <div class="table-wrap">
+      <table class="wide">
+        <thead><tr><th>No.</th><th>Role / position</th><th class="num">No. of staff</th><th class="num">Monthly rate (&#8369;)</th><th class="num">Daily rate (&#8369;)</th><th class="num">Days worked</th><th class="num">Total cost (&#8369;)</th><th>Source of rate</th></tr></thead>
+        <tbody id="hr-body"></tbody>
+        <tfoot id="hr-foot"></tfoot>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="consumables">
+  <div class="wrap">
+    <h2>2. Consumables and materials</h2>
+    <p class="intro">Items that are used up during the project or needed for operations.</p>
+    <div class="table-wrap">
+      <table class="wide">
+        <thead><tr><th>No.</th><th>Item</th><th>Description</th><th>Unit</th><th class="num">Quantity</th><th class="num">Unit cost (&#8369;)</th><th class="num">Total cost (&#8369;)</th><th>Source of price</th></tr></thead>
+        <tbody id="con-body"></tbody>
+        <tfoot id="con-foot"></tfoot>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="equipment">
+  <div class="wrap">
+    <h2>3. Equipment and tools</h2>
+    <p class="intro">Durable items used for developing, testing and presenting the system.</p>
+    <div class="table-wrap">
+      <table class="wide">
+        <thead><tr><th>No.</th><th>Equipment and tools</th><th>Description / specification</th><th class="num">Quantity</th><th class="num">Unit cost (&#8369;)</th><th class="num">Total cost (&#8369;)</th><th>Source of price</th></tr></thead>
+        <tbody id="eq-body"></tbody>
+        <tfoot id="eq-foot"></tfoot>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="utilities">
+  <div class="wrap">
+    <h2>4. Utilities and subscriptions</h2>
+    <p class="intro">Recurring services needed to develop, host and present the project.</p>
+    <div class="table-wrap">
+      <table class="wide">
+        <thead><tr><th>No.</th><th>Utility / subscription</th><th>Description</th><th class="num">Duration</th><th class="num">Cost per period (&#8369;)</th><th class="num">Total cost (&#8369;)</th><th>Source</th></tr></thead>
+        <tbody id="ut-body"></tbody>
+        <tfoot id="ut-foot"></tfoot>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="budget-summary">
+  <div class="wrap">
+    <h2>5. Total budget summary</h2>
+    <p class="intro">The total is calculated automatically from the costs entered in each category above.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Budget category</th><th class="num">Amount (&#8369;)</th><th>Share of total</th></tr></thead>
+        <tbody id="sum-body"></tbody>
+        <tfoot id="sum-foot"></tfoot>
+      </table>
+    </div>
+    <p class="note" id="lab5-note"></p>
+  </div>
+</section>
+
+</div><!-- /#budget -->
 
 </main>
 
@@ -509,6 +593,66 @@ const COMM_METHODS = [
   { method:"Interview / Survey", purpose:"To gather needs and feedback from students (end users), including the usability review.", type:"Formal", form:"Verbal and written" },
   { method:"Shared Folder / Shared Files", purpose:"To keep one organized copy of documents, the Figma file and the website so everyone uses the latest version.", type:"Formal", form:"Written / digital" },
   { method:"Consultation", purpose:"To ask the instructor or client for guidance, approval or clarification on deliverables.", type:"Formal", form:"Verbal (face-to-face)" }
+];
+
+/* ===== Laboratory Exercise 5: Project Budget =====
+   Edit quantities, unit costs and sources here. Every total on the page, including the
+   Total Budget Summary, is calculated automatically from these numbers. */
+const LAB5 = { title: "Laboratory Exercise 5 \u2013 Project Budget", section: "BSIS 3rd Year" };
+const BUDGET = {
+  workingDaysPerMonth: 22,
+  durationMonths: 2,
+  intro: "This budget estimates the cost of building the FindIt Lost and Found System prototype, from project initiation to the final presentation.",
+  note: "All prices are estimates in Philippine pesos (\u20b1) based on the online sources listed, checked in November 2026, and may change. The project runs 39 working days (about 2 months). Laptops, a printer and a router are listed as the equipment the team needs even if members already own similar items."
+};
+
+// Human resources: paid per day worked on the schedule. key = team member (see MEM)
+const HR_BUDGET = [
+  { role:"Project Manager",       key:"caermare",  staff:1, monthly:74145, days:7,  acts:"A, C, O",
+    src:{ name:"PayScale Philippines, IT Project Manager average (\u20b1889,737 per year \u00f7 12)" } },
+  { role:"System Analyst",        key:"diniay",    staff:1, monthly:40000, days:17, acts:"B, D, E, F, K, O",
+    src:{ name:"NodeFlair, Systems Analyst median salary in the Philippines", url:"https://nodeflair.com/salaries/philippines-system-analyst-salary" } },
+  { role:"UI/UX Designer",        key:"tan",       staff:1, monthly:40000, days:25, acts:"G, H, I, J, L, O",
+    src:{ name:"Second Talent, Philippines junior UI/UX Designer range (\u20b130K\u2013\u20b150K, midpoint)" } },
+  { role:"Documentation Lead",    key:"benedicto", staff:1, monthly:29908, days:7,  acts:"M, O",
+    src:{ name:"Indeed Philippines, Technical Writer average salary", url:"https://ph.indeed.com/career/technical-writer/salaries" } },
+  { role:"Web and Presentation",  key:"pausal",    staff:1, monthly:51838, days:5,  acts:"N, O",
+    src:{ name:"Indeed Philippines, Front-end Developer average salary" } },
+  { role:"QA Tester",             key:"pausal",    staff:1, monthly:36436, days:3,  acts:"K (support)",
+    src:{ name:"Indeed Philippines, Test Analyst average salary (closest match)", url:"https://ph.indeed.com/career/test-analyst/salaries" } }
+];
+
+const CONSUMABLES = [
+  { item:"Bond paper", desc:"A4 / short, 70 gsm, 500 sheets per ream, for printing the documentation and drafts", unit:"ream", qty:5, cost:240,
+    src:{ name:"SM Stationery, Hard Copy Bond Paper Substance 20", url:"https://smstationery.com.ph/collections/reams-copy-paper/products/hard-copy-copy-paper-substance-20-500-sheets" } },
+  { item:"Printer ink, black", desc:"Epson 003 black ink, 65 ml bottle (for the Epson L3210 printer)", unit:"bottle", qty:2, cost:280,
+    src:{ name:"PSA Request for Quotation 2024-0600-02-022 (government supply price)", url:"https://procurement.psa.gov.ph/sites/default/files/2024-0600-02-022%20BRFQ.pdf" } },
+  { item:"Printer ink, color", desc:"Epson 003 cyan, magenta and yellow ink, 65 ml bottles (1 of each)", unit:"bottle", qty:3, cost:280,
+    src:{ name:"PSA Request for Quotation 2024-0600-02-022 (government supply price)", url:"https://procurement.psa.gov.ph/sites/default/files/2024-0600-02-022%20BRFQ.pdf" } },
+  { item:"USB flash drive", desc:"SanDisk Cruzer Blade 32GB, for backups and file transfer", unit:"piece", qty:2, cost:388,
+    src:{ name:"Villman Computers", url:"https://villman.com/Product-Detail/SANDISK_32GB_CRUZERBLADE" } },
+  { item:"Ballpen", desc:"Black, 0.5 mm, for survey forms, interviews and notes", unit:"piece", qty:10, cost:15,
+    src:{ name:"PSA Request for Quotation 2024-0645-08-086 (government supply price)", url:"https://procurement.psa.gov.ph/sites/default/files/2024-0645-08-086-BRFQ.pdf" } }
+];
+
+const EQUIPMENT = [
+  { item:"Laptop", desc:"ASUS Vivobook Go 15 (E1504FA-BQ2353W), AMD Ryzen 3 7320U, 8GB RAM, 512GB SSD, Windows 11. One per team member", qty:5, cost:25995,
+    src:{ name:"Villman Computers", url:"https://villman.com/Product-Detail/asus_vivobook-go-15-e1504fa-bq2353w--156-fhd--amd-ryzen-3-7320u--amd-radeon-graphics--8gb-lpddr5--512gb-ssd" } },
+  { item:"Wi-Fi router", desc:"Tenda AC6 v5.0 AC1200 dual-band router, for the team's meeting and testing network", qty:1, cost:1169,
+    src:{ name:"Villman Computers", url:"https://villman.com/Product-Detail/tenda-_ac6-v50-ac1200-smart-dual-band-wifi-router" } },
+  { item:"Printer", desc:"Epson EcoTank L3210 A4 all-in-one ink tank printer (print, scan, copy), for the documentation", qty:1, cost:8795,
+    src:{ name:"Epson Philippines", url:"https://www.epson.com.ph/p/C11CJ68505" } }
+];
+
+const UTILITIES = [
+  { item:"Internet service", desc:"PLDT Home Fiber Unli Plan 1299, up to 50 Mbps (monthly service fee)", months:2, per:1299,
+    src:{ name:"PLDT Home", url:"https://pldthome.com/fiber-upgrade" } },
+  { item:"Electricity", desc:"Estimated 35 kWh per month (laptops, router and printer) at \u20b113.33 per kWh", months:2, per:466.55,
+    src:{ name:"SunStar Davao, residential rate for Oct 11\u2013Nov 10, 2026 (Mindanao reference rate)", url:"https://www.sunstar.com.ph/davao/power-supply-stable-despite-rate-hike" } },
+  { item:"Figma (design tool)", desc:"Figma Education plan for verified students, used for the UI/UX design and prototype", months:2, per:0,
+    src:{ name:"Figma pricing FAQ (free Education plan)", url:"https://www.figma.com/pricing-faq/" } },
+  { item:"Website hosting", desc:"GitHub Pages hosting for the project website (public repository, GitHub Free)", months:2, per:0,
+    src:{ name:"GitHub Docs, Creating a GitHub Pages site", url:"https://docs.github.com/en/pages/getting-started-with-github-pages/creating-a-github-pages-site" } }
 ];
 /* ========================= END OF EDITABLE DATA ========================= */
 
@@ -810,16 +954,86 @@ $('#matrix-body').innerHTML = MATRIX.map(m => `<tr>
   $('#lab4-note').textContent = `${LAB4.title} \u2022 ${LAB4.section}`;
 })();
 
+/* ---------- Laboratory Exercise 5: Project Budget ---------- */
+(function(){
+  const round2 = n => Math.round(n * 100) / 100;
+  const peso = n => '\u20b1' + n.toLocaleString('en-PH', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  const num  = n => n.toLocaleString('en-PH');
+  const src  = s => (s.url ? `<a href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.name)}</a>` : esc(s.name));
+  const foot = (cols, label, total) => `<tr class="sub-total"><td colspan="${cols}">${label}</td><td class="num">${peso(total)}</td><td></td></tr>`;
+
+  // 1. Human resources
+  const hr = HR_BUDGET.map(r => {
+    const daily = round2(r.monthly / BUDGET.workingDaysPerMonth);
+    return Object.assign({}, r, { daily, total: round2(r.staff * daily * r.days) });
+  });
+  const hrTotal = round2(hr.reduce((a, r) => a + r.total, 0));
+  $('#hr-body').innerHTML = hr.map((r, i) => `<tr>
+    <td>${i + 1}</td>
+    <td><b>${esc(r.role)}</b><br><span class="muted-role">${lf(r.key)} &bull; Activities: ${esc(r.acts)}</span></td>
+    <td class="num">${r.staff}</td><td class="num">${peso(r.monthly)}</td><td class="num">${peso(r.daily)}</td>
+    <td class="num">${r.days}</td><td class="num">${peso(r.total)}</td><td>${src(r.src)}</td></tr>`).join('');
+  $('#hr-foot').innerHTML = `<tr class="sub-total"><td colspan="2">Total human resource budget</td>
+    <td class="num">${hr.reduce((a, r) => a + r.staff, 0)}</td><td></td><td></td>
+    <td class="num">${hr.reduce((a, r) => a + r.days, 0)}</td><td class="num">${peso(hrTotal)}</td><td></td></tr>`;
+
+  // 2. Consumables
+  const con = CONSUMABLES.map(r => Object.assign({}, r, { total: round2(r.qty * r.cost) }));
+  const conTotal = round2(con.reduce((a, r) => a + r.total, 0));
+  $('#con-body').innerHTML = con.map((r, i) => `<tr>
+    <td>${i + 1}</td><td><b>${esc(r.item)}</b></td><td>${esc(r.desc)}</td><td>${esc(r.unit)}</td>
+    <td class="num">${num(r.qty)}</td><td class="num">${peso(r.cost)}</td><td class="num">${peso(r.total)}</td><td>${src(r.src)}</td></tr>`).join('');
+  $('#con-foot').innerHTML = foot(6, 'Total consumables and materials', conTotal);
+
+  // 3. Equipment and tools
+  const eq = EQUIPMENT.map(r => Object.assign({}, r, { total: round2(r.qty * r.cost) }));
+  const eqTotal = round2(eq.reduce((a, r) => a + r.total, 0));
+  $('#eq-body').innerHTML = eq.map((r, i) => `<tr>
+    <td>${i + 1}</td><td><b>${esc(r.item)}</b></td><td>${esc(r.desc)}</td>
+    <td class="num">${num(r.qty)}</td><td class="num">${peso(r.cost)}</td><td class="num">${peso(r.total)}</td><td>${src(r.src)}</td></tr>`).join('');
+  $('#eq-foot').innerHTML = foot(5, 'Total equipment and tools', eqTotal);
+
+  // 4. Utilities and subscriptions
+  const ut = UTILITIES.map(r => Object.assign({}, r, { total: round2(r.months * r.per) }));
+  const utTotal = round2(ut.reduce((a, r) => a + r.total, 0));
+  $('#ut-body').innerHTML = ut.map((r, i) => `<tr>
+    <td>${i + 1}</td><td><b>${esc(r.item)}</b></td><td>${esc(r.desc)}</td>
+    <td class="num">${r.months} ${r.months === 1 ? 'month' : 'months'}</td><td class="num">${r.per === 0 ? 'Free' : peso(r.per)}</td>
+    <td class="num">${peso(r.total)}</td><td>${src(r.src)}</td></tr>`).join('');
+  $('#ut-foot').innerHTML = foot(5, 'Total utilities and subscriptions', utTotal);
+
+  // 5. Total budget summary (always computed from the four totals above)
+  const grand = round2(hrTotal + conTotal + eqTotal + utTotal);
+  const rows = [
+    ['Human resources', hrTotal, '#hr-budget'],
+    ['Consumables and materials', conTotal, '#consumables'],
+    ['Equipment and tools', eqTotal, '#equipment'],
+    ['Utilities and subscriptions', utTotal, '#utilities']
+  ];
+  $('#sum-body').innerHTML = rows.map(r => {
+    const pct = grand ? (r[1] / grand * 100) : 0;
+    return `<tr><td><b>${r[0]}</b></td><td class="num">${peso(r[1])}</td>
+      <td><div class="share"><div class="share-bar"><span style="width:${pct.toFixed(1)}%"></span></div><span class="share-pct">${pct.toFixed(1)}%</span></div></td></tr>`;
+  }).join('');
+  $('#sum-foot').innerHTML = `<tr class="grand-total"><td>TOTAL PROJECT BUDGET</td><td class="num">${peso(grand)}</td><td></td></tr>`;
+
+  $('#bud-intro').textContent = BUDGET.intro;
+  $('#bud-note').textContent = BUDGET.note;
+  $('#lab5-note').textContent = `${LAB5.title} \u2022 ${LAB5.section}`;
+})();
+
 /* ---------- page router ---------- */
 function updatePageRoute(){
-  // Four pages. Old section ids still work as links: they open the right page and scroll to that section.
+  // Five pages. Old section ids still work as links: they open the right page and scroll to that section.
   const PAGE_OF = {
     home:'home', overview:'home', features:'home',
     schedule:'schedule', wbs:'schedule', sequencing:'schedule', durations:'schedule', gantt:'schedule',
     'project-team':'project-team', assessment:'project-team', roles:'project-team', orgchart:'project-team',
     responsibilities:'project-team', team:'project-team',
     communication:'communication', 'comm-plan':'communication', stakeholders:'communication',
-    'comm-objectives':'communication', 'comm-matrix':'communication', 'comm-methods':'communication'
+    'comm-objectives':'communication', 'comm-matrix':'communication', 'comm-methods':'communication',
+    budget:'budget', 'budget-intro':'budget', 'hr-budget':'budget', consumables:'budget', equipment:'budget',
+    utilities:'budget', 'budget-summary':'budget'
   };
   const hash = (window.location.hash || '#home').replace('#', '') || 'home';
   const activeId = PAGE_OF[hash] || 'home';

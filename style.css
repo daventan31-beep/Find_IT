@@ -1542,3 +1542,15 @@ table.wide td { vertical-align: top; }
 .muted-role { font-size: 13px; color: var(--muted-dim); }
 #communication table.wide { min-width: 860px; }
 #communication table.wide td { vertical-align: top; }
+
+/* ===== Laboratory Exercise 5: Project Budget ===== */
+#budget th.num, #budget td.num { text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; }
+#budget table.wide { min-width: 1020px; }
+#budget table.wide td { vertical-align: top; }
+#budget a { color: var(--accent); }
+#budget tfoot td { font-weight: 700; background: rgba(37, 99, 235, 0.08); border-top: 2px solid var(--accent); }
+#budget tfoot tr.grand-total td { font-size: 1.1rem; background: var(--accent); color: #fff; border-top: 0; }
+.share { display: flex; align-items: center; gap: 12px; min-width: 180px; }
+.share-bar { flex: 1; height: 10px; border-radius: 999px; background: rgba(37, 99, 235, 0.14); overflow: hidden; }
+.share-bar span { display: block; height: 100%; border-radius: 999px; background: var(--accent); }
+.share-pct { font-weight: 600; font-variant-numeric: tabular-nums; min-width: 52px; text-align: right; }
