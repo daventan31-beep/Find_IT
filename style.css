@@ -1,1556 +1,1153 @@
-:root {
-  --bg: #0f172a;
-  --surface: rgba(255, 255, 255, 0.76);
-  --surface-hover: rgba(255, 255, 255, 0.88);
-  --surface-dark: rgba(15, 23, 42, 0.88);
-  --ink: #0f172a;
-  --muted: #334155;
-  --muted-dim: #64748b;
-  --line: rgba(255, 255, 255, 0.65);
-  --line-dark: rgba(15, 23, 42, 0.12);
-
-  /* Accents */
-  --accent: #2563eb;
-  --accent-hover: #1d4ed8;
-  --accent-gradient: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
-  --crit: #dc2626;
-  --on-bar: #ffffff;
-
-  /* Category colors for phases */
-  --c0: #2563eb;
-  --c1: #0284c7;
-  --c2: #7c3aed;
-  --c3: #d97706;
-  --c4: #059669;
-  --c5: #0f766e;
-
-  --head: "Outfit", system-ui, -apple-system, sans-serif;
-  --body: "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
-}
-
-* {
-  box-sizing: border-box;
-}
-
-html {
-  scroll-behavior: smooth;
-  height: 100vh;
-  overflow: hidden;
-  background: var(--bg);
-}
-
-body {
-  margin: 0;
-  background: transparent;
-  color: var(--ink);
-  font-family: var(--body);
-  font-size: 16px;
-  line-height: 1.6;
-  position: relative;
-  height: 100vh;
-  overflow: hidden;
-}
-
-/* Background image: Ultra-rich warm/deep backdrop with images/B.gif texture */
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: -1;
-  background-image: linear-gradient(135deg, rgba(30, 41, 59, 0.35) 0%, rgba(15, 23, 42, 0.55) 100%), url("images/B.gif");
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  filter: blur(6px);
-  transform: scale(1.04);
-}
-
-h1,
-h2,
-h3 {
-  font-family: var(--head);
-  line-height: 1.2;
-  margin: 0;
-  color: var(--ink);
-}
-
-a {
-  color: var(--accent);
-  transition: color 0.2s ease;
-}
-
-a:hover {
-  color: var(--accent-hover);
-}
-
-:focus-visible {
-  outline: 3px solid var(--accent);
-  outline-offset: 3px;
-}
-
-.wrap {
-  max-width: 1400px;
-  margin: 0 auto;
-  padding: 0 24px;
-}
-
-/* App Canvas & Centered Translucent Glass Shell */
-.app-canvas {
-  position: relative;
-  max-width: 1560px;
-  width: 98vw;
-  margin: 0 auto;
-  padding: 16px 20px;
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  box-sizing: border-box;
-}
-
-.app-shell {
-  position: relative;
-  height: 100%;
-  max-height: calc(100vh - 32px);
-  display: flex;
-  flex-direction: column;
-  background: rgba(255, 255, 255, 0.52);
-  -webkit-backdrop-filter: blur(28px) saturate(180%);
-  backdrop-filter: blur(28px) saturate(180%);
-  border-radius: 32px;
-  border: 1px solid rgba(255, 255, 255, 0.65);
-  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.22), inset 0 1px 1px rgba(255, 255, 255, 0.85);
-  overflow: hidden;
-}
-
-/* Side vertical watermark tags matching reference image layout */
-.vert-label {
-  position: absolute;
-  top: 50vh;
-  z-index: 10;
-  font-family: var(--head);
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.75);
-  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
-  white-space: nowrap;
-  pointer-events: none;
-}
-
-.vert-left {
-  left: -90px;
-  transform: translateY(-50%) rotate(-90deg);
-}
-
-.vert-right {
-  right: -90px;
-  transform: translateY(-50%) rotate(90deg);
-}
-
-@media (max-width: 1720px) {
-  .vert-label {
-    display: none;
-  }
-}
-
-/* Translucent Glass Header inside App Shell */
-nav.top {
-  flex-shrink: 0;
-  position: relative;
-  top: 0;
-  left: 0;
-  right: 0;
-  width: 100%;
-  z-index: 1000;
-  background: rgba(255, 255, 255, 0.78);
-  -webkit-backdrop-filter: blur(24px);
-  backdrop-filter: blur(24px);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.6);
-  box-shadow: 0 4px 20px rgba(15, 23, 42, 0.05);
-}
-
-nav.top .wrap {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-  height: 64px;
-}
-
-nav.top .brand {
-  font-family: var(--head);
-  font-weight: 800;
-  font-size: 1.35rem;
-  color: var(--ink);
-  text-decoration: none;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.logo {
-  height: 34px;
-  width: auto;
-  display: block;
-}
-
-nav.top ul {
-  display: flex;
-  gap: 6px;
-  list-style: none;
-  margin: 0 0 0 auto;
-  padding: 0;
-  overflow-x: auto;
-  white-space: nowrap;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-}
-
-nav.top ul::-webkit-scrollbar,
-nav.top ul::-webkit-scrollbar-button,
-nav.top ul::-webkit-scrollbar-thumb,
-nav.top ul::-webkit-scrollbar-track {
-  display: none !important;
-  width: 0 !important;
-  height: 0 !important;
-  background: transparent !important;
-}
-
-nav.top ul a {
-  color: var(--muted);
-  text-decoration: none;
-  font-family: var(--head);
-  font-weight: 700;
-  font-size: 14px;
-  padding: 7px 16px;
-  border-radius: 99px;
-  transition: all 0.25s ease;
-  border: 1px solid transparent;
-}
-
-nav.top ul a:hover {
-  color: var(--ink);
-  background: rgba(255, 255, 255, 0.7);
-}
-
-nav.top ul a.active {
-  color: #ffffff;
-  background: var(--accent-gradient);
-  border-color: rgba(255, 255, 255, 0.3);
-  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.35);
-}
-
-.nav-icon-btn {
-  width: 38px;
-  height: 38px;
-  border-radius: 50%;
-  border: 1px solid rgba(255, 255, 255, 0.8);
-  background: rgba(255, 255, 255, 0.9);
-  color: var(--ink);
-  display: grid;
-  place-items: center;
-  cursor: pointer;
-  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.08);
-  transition: all 0.25s ease;
-  flex-shrink: 0;
-}
-
-.nav-icon-btn:hover {
-  background: var(--accent);
-  color: #ffffff;
-  border-color: var(--accent);
-  transform: scale(1.05);
-}
-
-/* hero section */
-.hero {
-  position: relative;
-  display: flex;
-  align-items: center;
-  padding: 32px 0 24px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.4);
-}
-
-.hero>.wrap {
-  width: 100%;
-}
-
-.hero-grid {
-  display: grid;
-  grid-template-columns: 1fr 1.05fr;
-  gap: 24px;
-  align-items: stretch;
-}
-
-@media (max-width: 960px) {
-  .hero-grid {
-    grid-template-columns: 1fr;
-  }
-}
-
-.hero .panel {
-  display: flex;
-  flex-direction: column;
-  padding: 32px 36px;
-  border-radius: 20px;
-  background: var(--surface);
-  -webkit-backdrop-filter: blur(20px);
-  backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.7);
-  box-shadow: 0 10px 40px rgba(15, 23, 42, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.9);
-}
-
-.pill-tag {
-  display: inline-block;
-  font-size: 12px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: var(--accent);
-  background: rgba(37, 99, 235, 0.1);
-  border: 1px solid rgba(37, 99, 235, 0.25);
-  padding: 4px 12px;
-  border-radius: 99px;
-  margin-bottom: 14px;
-  width: max-content;
-}
-
-.hero h1 {
-  font-size: clamp(2.4rem, 4.5vw, 3.2rem);
-  font-weight: 800;
-  letter-spacing: -0.02em;
-  color: var(--ink);
-}
-
-.hero p.lead {
-  font-size: 1.08rem;
-  color: var(--muted);
-  max-width: 64ch;
-  margin: 10px 0 0;
-  line-height: 1.6;
-  font-weight: 500;
-}
-
-.facts {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px 28px;
-  margin: 20px 0 0;
-  padding: 0;
-}
-
-.facts div {
-  min-width: 95px;
-}
-
-.facts dt {
-  font-size: 11.5px;
-  color: var(--muted-dim);
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  font-weight: 700;
-}
-
-.facts dd {
-  margin: 2px 0 0;
-  font-family: var(--head);
-  font-weight: 700;
-  font-size: 1.02rem;
-  color: var(--ink);
-}
-
-.hero-actions {
-  margin-top: 20px;
-}
-
-/* schedule at a glance (Dark Translucent Glass Widget inspired by ref UI) */
-.strip-box {
-  display: flex;
-  flex-direction: column;
-  background: var(--surface-dark);
-  color: #ffffff;
-  -webkit-backdrop-filter: blur(20px);
-  backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  border-radius: 20px;
-  padding: 24px 28px 20px;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
-}
-
-.strip-top {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  margin-bottom: 12px;
-}
-
-.strip-box h2 {
-  font-family: var(--head);
-  font-size: 1.05rem;
-  margin: 0;
-  color: #ffffff;
-  font-weight: 700;
-}
-
-.status-pill {
-  font-size: 11.5px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  color: #34d399;
-  background: rgba(52, 211, 153, 0.15);
-  border: 1px solid rgba(52, 211, 153, 0.3);
-  padding: 3px 10px;
-  border-radius: 99px;
-}
-
-#strip {
-  --weeks: 8;
-  margin-top: 4px;
-}
-
-.strip-head,
-.strip-line {
-  display: grid;
-  grid-template-columns: 240px 1fr;
-  align-items: center;
-}
-
-.strip-weeks {
-  display: flex;
-}
-
-.strip-weeks span {
-  flex: 1;
-  font-size: 11px;
-  color: #94a3b8;
-  border-left: 1px solid rgba(255, 255, 255, 0.12);
-  padding: 0 4px;
-}
-
-.strip-line {
-  border-top: 1px solid rgba(255, 255, 255, 0.12);
-  min-height: 22px;
-}
-
-.strip-name {
-  font-size: 12.5px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  padding-right: 8px;
-  color: #f1f5f9;
-}
-
-.strip-name b {
-  font-family: var(--head);
-  color: #60a5fa;
-  display: inline-block;
-  width: 18px;
-}
-
-.strip-track {
-  position: relative;
-  height: 20px;
-  background-image: linear-gradient(to right, transparent calc(100% - 1px), rgba(255, 255, 255, 0.12) 0);
-  background-size: calc(100%/var(--weeks)) 100%;
-  background-repeat: repeat-x;
-}
-
-.strip-bar {
-  position: absolute;
-  top: 3px;
-  height: 14px;
-  border-radius: 4px;
-  color: var(--on-bar);
-  font-size: 10.5px;
-  font-weight: 700;
-  line-height: 14px;
-  padding: 0 5px;
-  overflow: hidden;
-  white-space: nowrap;
-  transform-origin: left center;
-  animation: grow 0.7s ease-out both;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
-}
-
-@keyframes grow {
-  from {
-    transform: scaleX(0);
-  }
-
-  to {
-    transform: scaleX(1);
-  }
-}
-
-@media (max-width: 640px) {
-
-  .strip-head,
-  .strip-line {
-    grid-template-columns: 110px 1fr;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .strip-bar {
-    animation: none;
-  }
-
-  html {
-    scroll-behavior: auto;
-  }
-}
-
-/* main & sections */
-main {
-  flex: 1;
-  overflow-y: auto;
-  overflow-x: hidden;
-  padding-top: 12px;
-  padding-bottom: 24px;
-  scroll-behavior: smooth;
-  scrollbar-width: thin;
-  scrollbar-color: rgba(37, 99, 235, 0.4) transparent;
-}
-
-main::-webkit-scrollbar {
-  width: 8px;
-}
-
-main::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-main::-webkit-scrollbar-thumb {
-  background: rgba(15, 23, 42, 0.2);
-  border-radius: 99px;
-}
-
-main::-webkit-scrollbar-thumb:hover {
-  background: var(--accent);
-}
-
-.page-section {
-  display: none;
-}
-
-.page-section.active {
-  display: block;
-  animation: pageFade 0.25s ease-out both;
-}
-
-@keyframes pageFade {
-  from {
-    opacity: 0;
-    transform: translateY(6px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .page-section.active {
-    animation: none;
-  }
-}
-
-section.block {
-  padding: 24px 0 16px;
-}
-
-section.block>.wrap {
-  max-width: 1400px;
-  margin: 0 auto;
-  padding: 36px 40px;
-  background: rgba(255, 255, 255, 0.82);
-  -webkit-backdrop-filter: blur(24px);
-  backdrop-filter: blur(24px);
-  border: 1px solid rgba(255, 255, 255, 0.8);
-  border-radius: 24px;
-  box-shadow: 0 12px 40px rgba(15, 23, 42, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.95);
-  position: relative;
-  transition: box-shadow 0.3s ease, border-color 0.3s ease;
-}
-
-section.block>.wrap:hover {
-  border-color: rgba(37, 99, 235, 0.4);
-  box-shadow: 0 14px 48px -10px rgba(37, 99, 235, 0.15);
-}
-
-section.block>.wrap>h2 {
-  font-size: clamp(1.8rem, 3.5vw, 2.5rem);
-  font-weight: 800;
-  letter-spacing: -0.02em;
-  color: var(--ink);
-}
-
-section.block>.wrap>p.intro {
-  color: var(--muted);
-  max-width: 72ch;
-  margin: 6px 0 18px;
-  font-size: 1.05rem;
-}
-
-.cols {
-  display: grid;
-  grid-template-columns: 1.3fr 1fr;
-  gap: 36px;
-  margin-top: 24px;
-}
-
-.cols h3 {
-  font-family: var(--head);
-  font-size: 1.25rem;
-  margin-bottom: 8px;
-  color: var(--ink);
-  font-weight: 700;
-}
-
-.cols p {
-  margin: 0 0 16px;
-  max-width: 66ch;
-  color: var(--muted);
-}
-
-.cols ul {
-  margin: 0 0 20px;
-  padding-left: 20px;
-  color: var(--muted);
-}
-
-.cols li {
-  margin-bottom: 8px;
-}
-
-@media (max-width: 820px) {
-  .cols {
-    grid-template-columns: 1fr;
-    gap: 16px;
-  }
-}
-
-/* features */
-.callout {
-  margin: 16px 0 28px;
-  padding: 16px 20px;
-  border-left: 4px solid var(--accent);
-  background: rgba(37, 99, 235, 0.06);
-  border-radius: 0 12px 12px 0;
-  max-width: 78ch;
-  color: var(--ink);
-}
-
-.feat {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 18px;
-}
-
-.feat article {
-  background: rgba(255, 255, 255, 0.85);
-  -webkit-backdrop-filter: blur(12px);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.8);
-  border-top: 3px solid var(--accent);
-  border-radius: 14px;
-  padding: 20px;
-  transition: all 0.25s ease;
-  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.04);
-}
-
-.feat article:hover {
-  transform: translateY(-4px);
-  background: rgba(255, 255, 255, 0.95);
-  border-color: rgba(37, 99, 235, 0.4);
-  border-top-color: var(--accent);
-  box-shadow: 0 12px 32px rgba(37, 99, 235, 0.12);
-}
-
-.feat h3 {
-  font-family: var(--head);
-  font-size: 1.1rem;
-  margin-bottom: 6px;
-  color: var(--ink);
-}
-
-.feat p {
-  margin: 0;
-  font-size: 14.5px;
-  color: var(--muted);
-  line-height: 1.5;
-}
-
-h3.sub {
-  font-family: var(--head);
-  font-size: 1.4rem;
-  font-weight: 700;
-  margin: 40px 0 18px;
-  color: var(--ink);
-}
-
-.steps {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  counter-reset: s;
-  display: grid;
-  gap: 12px;
-  max-width: 72ch;
-}
-
-.steps li {
-  counter-increment: s;
-  position: relative;
-  padding: 14px 18px 14px 60px;
-  background: rgba(255, 255, 255, 0.85);
-  -webkit-backdrop-filter: blur(12px);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.8);
-  border-radius: 14px;
-  color: var(--ink);
-  transition: all 0.2s ease;
-  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.04);
-}
-
-.steps li:hover {
-  border-color: rgba(37, 99, 235, 0.4);
-  box-shadow: 0 6px 20px rgba(37, 99, 235, 0.1);
-}
-
-.steps li::before {
-  content: counter(s);
-  position: absolute;
-  left: 14px;
-  top: 12px;
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  background: var(--accent-gradient);
-  color: #ffffff;
-  font-family: var(--head);
-  font-weight: 800;
-  display: grid;
-  place-items: center;
-  font-size: 15px;
-  box-shadow: 0 3px 10px rgba(37, 99, 235, 0.3);
-}
-
-.btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 11px 24px;
-  border-radius: 99px;
-  background: var(--accent-gradient);
-  color: #ffffff;
-  font-family: var(--head);
-  font-weight: 700;
-  font-size: 14.5px;
-  text-decoration: none;
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  box-shadow: 0 4px 16px rgba(37, 99, 235, 0.35);
-  transition: all 0.25s ease;
-}
-
-.btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 22px rgba(37, 99, 235, 0.5);
-  color: #ffffff;
-}
-
-/* WBS */
-.wbs {
-  overflow-x: auto;
-  padding-bottom: 16px;
-}
-
-.wbs-root {
-  width: max-content;
-  max-width: 100%;
-  margin: 0 auto;
-  background: var(--accent-gradient);
-  color: #ffffff;
-  font-family: var(--head);
-  font-weight: 800;
-  font-size: 1.2rem;
-  padding: 14px 32px;
-  border-radius: 12px;
-  text-align: center;
-  position: relative;
-  box-shadow: 0 6px 24px rgba(37, 99, 235, 0.35);
-}
-
-.wbs-root::after {
-  content: "";
-  position: absolute;
-  left: 50%;
-  top: 100%;
-  height: 28px;
-  border-left: 2px solid var(--line-dark);
-}
-
-.wbs-phases {
-  --n: 5;
-  display: grid;
-  grid-template-columns: repeat(var(--n), minmax(200px, 1fr));
-  gap: 16px;
-  position: relative;
-  padding-top: 28px;
-  margin-top: 0;
-  min-width: calc(var(--n)*214px);
-}
-
-.wbs-phases::before {
-  content: "";
-  position: absolute;
-  top: 28px;
-  left: calc(50%/var(--n));
-  right: calc(50%/var(--n));
-  border-top: 2px solid var(--line-dark);
-}
-
-.wbs-phase {
-  position: relative;
-  padding-top: 24px;
-}
-
-.wbs-phase::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 50%;
-  height: 24px;
-  border-left: 2px solid var(--line-dark);
-}
-
-.wbs-phase h3 {
-  font-family: var(--head);
-  font-size: 1rem;
-  color: #ffffff;
-  padding: 12px 16px;
-  border-radius: 10px 10px 0 0;
-  min-height: 56px;
-  display: flex;
-  align-items: center;
-  font-weight: 700;
-}
-
-.wbs-phase ul {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  background: rgba(255, 255, 255, 0.95);
-  border: 1px solid var(--line-dark);
-  border-top: 0;
-  border-radius: 0 0 10px 10px;
-}
-
-.wbs-phase li {
-  padding: 10px 14px;
-  border-top: 1px solid var(--line-dark);
-  font-size: 14px;
-  line-height: 1.4;
-  color: var(--ink);
-}
-
-.wbs-phase li:first-child {
-  border-top: 0;
-}
-
-.wbs-phase li b {
-  font-family: var(--head);
-  color: var(--accent);
-  margin-right: 6px;
-}
-
-/* tables */
-.table-wrap {
-  overflow-x: auto;
-  background: rgba(255, 255, 255, 0.92);
-  border: 1px solid var(--line-dark);
-  border-radius: 14px;
-  box-shadow: 0 4px 20px rgba(15, 23, 42, 0.04);
-}
-
-table {
-  border-collapse: collapse;
-  width: 100%;
-  min-width: 740px;
-  font-size: 14.5px;
-}
-
-th,
-td {
-  text-align: left;
-  padding: 14px 18px;
-  border-bottom: 1px solid var(--line-dark);
-  vertical-align: middle;
-}
-
-th {
-  font-family: var(--head);
-  font-size: 13.5px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  background: rgba(241, 245, 249, 0.9);
-  color: var(--ink);
-  white-space: nowrap;
-}
-
-tbody tr {
-  transition: background 0.2s ease;
-}
-
-tbody tr:hover {
-  background: rgba(37, 99, 235, 0.05);
-}
-
-tbody tr:last-child td {
-  border-bottom: 0;
-}
-
-td.num,
-th.num {
-  text-align: right;
-  font-variant-numeric: tabular-nums;
-}
-
-tr.crit-row td:first-child {
-  box-shadow: inset 4px 0 0 var(--crit);
-}
-
-.tag {
-  display: inline-block;
-  font-size: 12px;
-  font-weight: 700;
-  color: var(--crit);
-  border: 1px solid var(--crit);
-  border-radius: 99px;
-  padding: 2px 9px;
-  background: rgba(220, 38, 38, 0.08);
-}
-
-tfoot td {
-  font-weight: 700;
-  background: rgba(241, 245, 249, 0.9);
-  color: var(--ink);
-  border-top: 1px solid var(--line-dark);
-}
-
-.note {
-  font-size: 14px;
-  color: var(--muted);
-  margin: 10px 0 0;
-  max-width: 80ch;
-}
-
-/* network diagram */
-.net-scroll {
-  overflow: auto;
-  background: rgba(255, 255, 255, 0.92);
-  border: 1px solid var(--line-dark);
-  border-radius: 14px;
-  margin-bottom: 24px;
-}
-
-.net-scroll svg {
-  display: block;
-}
-
-.n-box {
-  fill: #ffffff;
-  stroke: var(--line-dark);
-  stroke-width: 1.4;
-}
-
-.n-box.crit {
-  stroke: var(--crit);
-  stroke-width: 2.2;
-}
-
-.n-id {
-  font-family: var(--head);
-  font-weight: 800;
-  font-size: 13px;
-  fill: var(--ink);
-}
-
-.n-txt {
-  font-family: var(--body);
-  font-size: 12px;
-  fill: var(--muted);
-}
-
-.edge {
-  fill: none;
-  stroke: var(--line-dark);
-  stroke-width: 1.5;
-}
-
-.edge.crit {
-  stroke: var(--crit);
-  stroke-width: 2.2;
-}
-
-.legend {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px 24px;
-  margin: 0 0 16px;
-  font-size: 14px;
-  color: var(--muted);
-}
-
-.legend span {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.sw {
-  width: 14px;
-  height: 14px;
-  border-radius: 3px;
-  display: inline-block;
-}
-
-.sw.critline {
-  height: 0;
-  width: 24px;
-  border-top: 3px solid var(--crit);
-  border-radius: 0;
-}
-
-/* gantt */
-.gantt {
-  --weeks: 10;
-  min-width: 960px;
-  background: rgba(255, 255, 255, 0.92);
-  border: 1px solid var(--line-dark);
-  border-radius: 14px;
-}
-
-.g-scroll {
-  overflow-x: auto;
-}
-
-.g-row {
-  display: grid;
-  grid-template-columns: 280px 1fr;
-  border-bottom: 1px solid var(--line-dark);
-  min-height: 38px;
-}
-
-.g-row:last-child {
-  border-bottom: 0;
-}
-
-.g-label {
-  position: sticky;
-  left: 0;
-  z-index: 2;
-  background: rgba(255, 255, 255, 0.95);
-  padding: 8px 14px;
-  border-right: 1px solid var(--line-dark);
-  font-size: 14px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  color: var(--ink);
-}
-
-.g-label b {
-  font-family: var(--head);
-  color: var(--accent);
-  min-width: 18px;
-}
-
-.g-track {
-  position: relative;
-  background-image: linear-gradient(to right, transparent calc(100% - 1px), var(--line-dark) 0);
-  background-size: calc(100%/var(--weeks)) 100%;
-  background-repeat: repeat-x;
-}
-
-.g-head {
-  background: rgba(241, 245, 249, 0.9);
-}
-
-.g-head .g-label {
-  background: rgba(241, 245, 249, 0.9);
-  font-family: var(--head);
-  font-weight: 700;
-  color: var(--ink);
-}
-
-.g-head .g-track {
-  display: flex;
-  background-image: none;
-}
-
-.g-head .g-track span {
-  flex: 1;
-  font-size: 12px;
-  line-height: 1.3;
-  padding: 6px 8px;
-  border-left: 1px solid var(--line-dark);
-  color: var(--muted);
-}
-
-.g-head .g-track span:first-child {
-  border-left: 0;
-}
-
-.g-head .g-track b {
-  display: block;
-  color: var(--ink);
-  font-family: var(--head);
-}
-
-.g-phase {
-  background: rgba(241, 245, 249, 0.7);
-}
-
-.g-phase .g-label {
-  background: rgba(241, 245, 249, 0.7);
-  font-family: var(--head);
-  font-weight: 700;
-  color: var(--ink);
-}
-
-.g-sum {
-  position: absolute;
-  top: 14px;
-  height: 8px;
-  border-radius: 3px;
-  opacity: 0.65;
-}
-
-.g-bar {
-  position: absolute;
-  top: 7px;
-  height: 22px;
-  border-radius: 4px;
-  color: var(--on-bar);
-  font-size: 12px;
-  font-weight: 700;
-  line-height: 22px;
-  padding: 0 8px;
-  overflow: hidden;
-  white-space: nowrap;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
-}
-
-.g-bar.crit {
-  outline: 2px solid var(--crit);
-  outline-offset: 1px;
-}
-
-/* team */
-.team-photo {
-  margin: 0 0 20px;
-  width: 100%;
-}
-
-.team-photo img {
-  width: 100%;
-  height: 220px;
-  object-fit: cover;
-  border-radius: 16px;
-  display: block;
-  border: 1px solid var(--line-dark);
-}
-
-.team-photo figcaption {
-  color: var(--muted);
-  font-size: 14.5px;
-  margin-top: 8px;
-}
-
-.team {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
-  gap: 18px;
-}
-
-.member {
-  background: rgba(255, 255, 255, 0.85);
-  -webkit-backdrop-filter: blur(12px);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.8);
-  border-radius: 16px;
-  padding: 22px;
-  transition: all 0.25s ease;
-  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.04);
-}
-
-.member:hover {
-  transform: translateY(-4px);
-  background: rgba(255, 255, 255, 0.95);
-  border-color: rgba(37, 99, 235, 0.4);
-  box-shadow: 0 12px 28px rgba(37, 99, 235, 0.1);
-}
-
-.avatar {
-  width: 72px;
-  height: 72px;
-  border-radius: 50%;
-  display: grid;
-  place-items: center;
-  font-family: var(--head);
-  font-weight: 800;
-  font-size: 1.25rem;
-  color: var(--on-bar);
-  margin-bottom: 14px;
-  overflow: hidden;
-  border: 2px solid rgba(255, 255, 255, 0.9);
-  background: #f8fafc;
-  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.08);
-}
-
-.avatar img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center 42%;
-  display: block;
-}
-
-.member h3 {
-  font-family: var(--head);
-  font-size: 1.15rem;
-  color: var(--ink);
-}
-
-.member p {
-  margin: 3px 0 8px;
-  color: var(--muted);
-  font-size: 14.5px;
-}
-
-.member a {
-  font-size: 14px;
-  word-break: break-all;
-}
-
-.contact {
-  margin-top: 24px;
-  padding: 18px 22px;
-  border-left: 4px solid var(--accent);
-  background: rgba(37, 99, 235, 0.06);
-  border-radius: 0 12px 12px 0;
-  max-width: 72ch;
-  color: var(--ink);
-}
-
-footer {
-  flex-shrink: 0;
-  position: relative;
-  z-index: 1000;
-  background: rgba(255, 255, 255, 0.78);
-  -webkit-backdrop-filter: blur(24px);
-  backdrop-filter: blur(24px);
-  border-top: 1px solid rgba(255, 255, 255, 0.6);
-  box-shadow: 0 -4px 20px rgba(15, 23, 42, 0.05);
-  padding: 14px 0;
-  color: var(--muted);
-  font-size: 13.5px;
-}
-
-footer>.wrap {
-  text-align: center;
-  font-weight: 500;
-}
-
-/* Image Clickable State */
-.avatar img,
-.team-photo img {
-  cursor: pointer;
-  transition: transform 0.25s ease;
-}
-
-.avatar img:hover,
-.team-photo img:hover {
-  transform: scale(1.05);
-}
-
-/* Modal & Lightbox Cropper */
-.modal-overlay {
-  position: fixed;
-  inset: 0;
-  z-index: 2000;
-  background: rgba(15, 23, 42, 0.75);
-  -webkit-backdrop-filter: blur(12px);
-  backdrop-filter: blur(12px);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.3s ease;
-  padding: 20px;
-}
-
-.modal-overlay.active {
-  opacity: 1;
-  pointer-events: auto;
-}
-
-.modal-content {
-  position: relative;
-  background: #ffffff;
-  border-radius: 20px;
-  max-width: 640px;
-  width: 100%;
-  max-height: 90vh;
-  display: flex;
-  flex-direction: column;
-  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.25);
-  overflow: hidden;
-  animation: modalScale 0.25s ease-out;
-  border: 1px solid var(--line-dark);
-  color: var(--ink);
-}
-
-@keyframes modalScale {
-  from {
-    transform: scale(0.92);
-    opacity: 0;
-  }
-
-  to {
-    transform: scale(1);
-    opacity: 1;
-  }
-}
-
-.modal-close {
-  position: absolute;
-  top: 14px;
-  right: 14px;
-  z-index: 10;
-  background: rgba(15, 23, 42, 0.6);
-  color: #fff;
-  border: 0;
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  font-size: 22px;
-  line-height: 1;
-  cursor: pointer;
-  display: grid;
-  place-items: center;
-  transition: background 0.2s;
-}
-
-.modal-close:hover {
-  background: rgba(15, 23, 42, 0.9);
-}
-
-.modal-body {
-  padding: 28px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 18px;
-  overflow-y: auto;
-}
-
-.img-container {
-  width: 100%;
-  max-height: 55vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow: hidden;
-  border-radius: 12px;
-  background: #0f172a;
-}
-
-.img-container img {
-  max-width: 100%;
-  max-height: 55vh;
-  object-fit: contain;
-  transition: transform 0.2s ease;
-}
-
-.modal-controls {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  padding-top: 16px;
-  border-top: 1px solid var(--line-dark);
-}
-
-.modal-controls label {
-  font-size: 14px;
-  color: var(--ink);
-}
-
-.modal-controls input[type="range"] {
-  width: 100%;
-  cursor: pointer;
-  accent-color: var(--accent);
-}
-
-.zoom-btns {
-  display: flex;
-  gap: 10px;
-  justify-content: center;
-}
-
-.btn-sm {
-  padding: 8px 18px;
-  font-size: 14px;
-  font-weight: 600;
-  border-radius: 8px;
-  border: 1px solid var(--line-strong);
-  background: #f8fafc;
-  color: var(--ink);
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.btn-sm:hover {
-  background: var(--accent);
-  color: #ffffff;
-  border-color: var(--accent);
-}
-
-/* Mobile Responsiveness Enhancements */
-@media (max-width: 768px) {
-  .app-canvas {
-    padding: 0;
-    width: 100%;
-    height: 100vh;
-  }
-
-  .app-shell {
-    max-height: 100vh;
-    border-radius: 0;
-    border: none;
-  }
-
-  nav.top .wrap {
-    padding: 0 12px;
-    gap: 10px;
-    height: 56px;
-  }
-
-  nav.top .brand {
-    font-size: 1.15rem;
-  }
-
-  .logo {
-    height: 28px;
-  }
-
-  nav.top ul a {
-    padding: 5px 12px;
-    font-size: 13px;
-  }
-
-  section.block {
-    padding: 12px 0 8px;
-  }
-
-  section.block>.wrap {
-    padding: 20px 16px;
-    border-radius: 16px;
-  }
-
-  .hero .panel {
-    padding: 20px 16px;
-    border-radius: 16px;
-  }
-
-  .strip-box {
-    padding: 16px 16px 14px;
-    border-radius: 16px;
-  }
-
-  .feat {
-    grid-template-columns: 1fr;
-  }
-
-  .team {
-    grid-template-columns: 1fr;
-  }
-
-  .team-photo img {
-    height: 180px;
-  }
-
-  footer {
-    padding: 10px 0;
-    font-size: 12px;
-  }
-}
-/* ===== Laboratory Exercise 3 sections ===== */
-table.wide { min-width: 980px; }
-table.wide td { vertical-align: top; }
-.cell-list { margin: 0; padding-left: 18px; }
-.cell-list li { margin-bottom: 4px; }
-.tag.type { color: var(--accent); border-color: var(--accent); background: rgba(37, 99, 235, 0.08); }
-
-/* org chart */
-.org { display: flex; flex-direction: column; align-items: center; margin-top: 24px; --gap: 18px; --drop: 28px; }
-.org-top { width: min(360px, 100%); }
-.org-stem { width: 2px; height: var(--drop); background: var(--line-strong, #94a3b8); }
-.org-kids { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--gap); width: 100%; }
-.org-kid { position: relative; padding-top: var(--drop); }
-.org-kid::before { content: ""; position: absolute; left: 50%; top: 0; height: var(--drop); width: 2px; background: var(--line-strong, #94a3b8); }
-.org-kid::after { content: ""; position: absolute; top: 0; height: 2px; left: calc(var(--gap) / -2); right: calc(var(--gap) / -2); background: var(--line-strong, #94a3b8); }
-.org-kid:first-child::after { left: 50%; }
-.org-kid:last-child::after { right: 50%; }
-.org-node { height: 100%; background: rgba(255, 255, 255, 0.92); border: 1px solid var(--line-dark); border-top: 4px solid var(--c, var(--accent)); border-radius: 14px; padding: 18px; box-shadow: 0 4px 14px rgba(15, 23, 42, 0.05); }
-.org-node.lead { border-top-color: var(--accent); text-align: center; }
-.org-node.lead .cell-list { text-align: left; }
-.org-node h3 { font-size: 1.05rem; margin-bottom: 4px; }
-.org-name { display: block; font-family: var(--head); color: var(--accent); margin-bottom: 10px; }
-.org-node .cell-list { font-size: 14px; color: var(--muted); }
-
-/* responsibilities */
-.resp-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 18px; margin-top: 18px; }
-.resp-card { background: rgba(255, 255, 255, 0.88); border: 1px solid rgba(255, 255, 255, 0.8); border-top: 4px solid var(--c, var(--accent)); border-radius: 16px; padding: 22px; box-shadow: 0 4px 14px rgba(15, 23, 42, 0.04); }
-.resp-head { display: flex; align-items: center; gap: 14px; margin-bottom: 8px; }
-.resp-head .avatar { margin: 0; flex-shrink: 0; width: 60px; height: 60px; }
-.resp-head h3 { font-size: 1.1rem; }
-.resp-head p { margin: 2px 0 0; color: var(--muted); font-size: 14px; font-weight: 600; }
-.resp-card h4 { font-family: var(--head); font-size: 12.5px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted-dim); margin: 16px 0 6px; }
-.resp-card .cell-list { font-size: 14.5px; color: var(--muted); }
-
-@media (max-width: 1000px) {
-  .org-kids { grid-template-columns: 1fr; width: min(420px, 100%); gap: 0; }
-  .org { --drop: 20px; }
-  .org-kid::after { display: none; }
-  .org-kid::before { left: 50%; }
-}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FindIt | JRMSU Lost & Found System</title>
+<meta name="description" content="FindIt - Official Information Systems Project Portfolio for JRMSU Main Campus Lost & Found System.">
+
+<!-- Open Graph / Facebook / Messenger Link Preview -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="http://findit-jrmsu.freedev.app">
+<meta property="og:title" content="FindIt | JRMSU Lost & Found System">
+<meta property="og:description" content="Official IS Project Portfolio for JRMSU Main Campus Lost & Found System.">
+<meta property="og:image" content="images/logo.gif">
+
+<link rel="icon" href="images/logo.gif">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Outfit:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="app-canvas">
+  <div class="vert-label vert-left">JRMSU Main Campus &bull; 2026-2027</div>
+  <div class="vert-label vert-right">IS Project Management &bull; FindIt</div>
+
+  <div class="app-shell">
+    <nav class="top" aria-label="Main">
+      <div class="wrap">
+        <a class="brand" href="#home"><img class="logo" src="images/logo.gif" alt="FindIt logo"><span id="brand"></span></a>
+        <ul>
+          <li><a href="#home">Home</a></li>
+          <li><a href="#schedule">Project Schedule</a></li>
+          <li><a href="#project-team">Project Team</a></li>
+          <li><a href="#communication">Project Communication Plan</a></li>
+          <li><a href="#budget">Project Budget</a></li>
+        </ul>
+        <button class="nav-icon-btn" title="Figma Prototype / Quick Link" onclick="window.open(PROJECT.figmaUrl || '#', '_blank')">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+        </button>
+      </div>
+    </nav>
+
+    <main>
+<div class="page-section" id="home">
+<div id="overview">
+  <header class="hero" id="top">
+    <div class="wrap">
+      <div class="hero-grid">
+        <div class="panel">
+          <span class="pill-tag">IS Project Portfolio</span>
+          <h1 id="h-title"></h1>
+          <p class="lead" id="h-tagline"></p>
+          <dl class="facts" id="facts"></dl>
+          <div id="h-link" class="hero-actions"></div>
+        </div>
+        <div class="strip-box" aria-label="Schedule at a glance">
+          <div class="strip-top">
+            <h2>Schedule at a glance</h2>
+            <span class="status-pill">Critical Path Method</span>
+          </div>
+          <div id="strip"></div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <section class="block">
+    <div class="wrap">
+      <h2>Project overview</h2>
+      <div class="cols">
+        <div id="ov-left"></div>
+        <div id="ov-right"></div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<section class="block" id="features">
+  <div class="wrap">
+    <h2>Proposed features</h2>
+    <div class="callout" id="scope-note"></div>
+    <div class="feat" id="feat-list"></div>
+    <h3 class="sub">How FindIt would work</h3>
+    <ol class="steps" id="how-list"></ol>
+  </div>
+</section>
+</div><!-- /#home -->
+
+<div class="page-section" id="schedule">
+
+<section class="block" id="wbs">
+  <div class="wrap">
+    <h2>Work Breakdown Structure</h2>
+    <p class="intro">The project is split into phases, and each phase into the activities the team will carry out. Each activity has a WBS code (phase.activity).</p>
+    <div class="wbs" id="wbs-chart"></div>
+  </div>
+</section>
+
+<section class="block" id="sequencing">
+  <div class="wrap">
+    <h2>Activity sequencing</h2>
+    <p class="intro">Each activity starts only after its predecessors finish (finish-to-start). The orange path is the critical path: a delay on any of these activities delays the whole project.</p>
+    <div class="legend" id="net-legend"></div>
+    <div class="net-scroll" id="net"></div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>ID</th><th>Activity</th><th>Predecessors</th><th>Successors</th><th>Relationship</th></tr></thead>
+        <tbody id="seq-body"></tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="durations">
+  <div class="wrap">
+    <h2>Activity duration estimates</h2>
+    <p class="intro">Durations are the team's most likely estimate in working days (Monday to Friday). Slack is how many days an activity can slip without delaying the finish date.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>WBS</th><th>ID</th><th>Activity</th><th>Assigned to</th><th class="num">Duration (days)</th><th>Start</th><th>Finish</th><th class="num">Slack (days)</th><th>Critical</th></tr></thead>
+        <tbody id="dur-body"></tbody>
+        <tfoot><tr id="dur-foot"></tr></tfoot>
+      </table>
+    </div>
+    <p class="note">Dates assume work starts on the project start date and skip weekends. Holidays and class suspensions are not deducted.</p>
+  </div>
+</section>
+
+<section class="block" id="gantt">
+  <div class="wrap">
+    <h2>Gantt chart</h2>
+    <p class="intro">Bars show when each activity runs. Outlined bars are on the critical path.</p>
+    <div class="legend" id="g-legend"></div>
+    <div class="g-scroll"><div class="gantt" id="gantt-chart"></div></div>
+  </div>
+</section>
+
+</div><!-- /#schedule -->
+
+<div class="page-section" id="project-team">
+
+<section class="block" id="assessment">
+  <div class="wrap">
+    <h2>Team member assessment</h2>
+    <p class="intro">Before assigning roles, the team discussed each member's skills and strengths, using the work personalities from the lesson: Deliverer, Prototype, Perfector, Producer, Fixer and Finisher.</p>
+    <div class="table-wrap">
+      <table class="wide">
+        <thead><tr><th>Team member</th><th>Skills / strengths</th><th>Preferred tasks</th><th>Assigned project role</th><th>Work personality</th><th>Reason for assignment</th></tr></thead>
+        <tbody id="assess-body"></tbody>
+      </table>
+    </div>
+    <p class="note" id="lab-note"></p>
+  </div>
+</section>
+
+<section class="block" id="roles">
+  <div class="wrap">
+    <h2>Assigned project team roles</h2>
+    <p class="intro">Each role matches the requirements of the proposed system. Roles may be combined depending on the number of members, but every member has a clearly defined responsibility.</p>
+    <div class="table-wrap">
+      <table class="wide">
+        <thead><tr><th>Project role</th><th>Assigned member</th><th>Major responsibilities</th><th>Expected deliverables</th></tr></thead>
+        <tbody id="roles-body"></tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="orgchart">
+  <div class="wrap">
+    <h2>Project team organizational chart</h2>
+    <p class="intro" id="org-intro"></p>
+    <div class="org" id="org-chart"></div>
+  </div>
+</section>
+
+<section class="block" id="responsibilities">
+  <div class="wrap">
+    <h2>Team members' roles and responsibilities</h2>
+    <p class="intro">What each member is responsible for, the deliverables they own, and the schedule activities they lead or support.</p>
+    <div class="resp-grid" id="resp-list"></div>
+    <h3 class="sub">Roles connected to the project schedule</h3>
+    <p class="intro">Every activity in the schedule has one responsible member and the members who support them.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>ID</th><th>Project activity</th><th>Responsible member</th><th>Role</th><th>Supporting member/s</th></tr></thead>
+        <tbody id="matrix-body"></tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="team">
+  <div class="wrap">
+    <h2>Team and contact</h2>
+    <p class="intro" id="team-intro"></p>
+    <figure class="team-photo">
+      <img src="images/logo.gif" alt="The FindIt project team">
+      <figcaption>The FindIt team</figcaption>
+    </figure>
+    <div class="team" id="team-list"></div>
+    <div class="contact" id="contact"></div>
+  </div>
+</section>
+
+</div><!-- /#project-team -->
+
+<div class="page-section" id="communication">
+
+<section class="block" id="comm-plan">
+  <div class="wrap">
+    <h2>Project Communication Plan</h2>
+    <p class="intro" id="comm-intro"></p>
+    <div class="callout" id="comm-note"></div>
+  </div>
+</section>
+
+<section class="block" id="stakeholders">
+  <div class="wrap">
+    <h2>1. Project stakeholders</h2>
+    <p class="intro">These are the people and groups who take part in, are affected by, or have an interest in the FindIt project.</p>
+    <div class="table-wrap">
+      <table class="wide">
+        <thead><tr><th>Stakeholders</th><th>Name / group</th><th>Role in the project</th><th>Type</th></tr></thead>
+        <tbody id="stake-body"></tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="comm-objectives">
+  <div class="wrap">
+    <h2>2. Communication objectives</h2>
+    <p class="intro">What the team wants to achieve through its communication throughout the project.</p>
+    <ol class="steps" id="comm-obj-list"></ol>
+  </div>
+</section>
+
+<section class="block" id="comm-matrix">
+  <div class="wrap">
+    <h2>3. Project communication matrix</h2>
+    <p class="intro">Who receives which information, how it is shared, how often, and which team member is responsible for sharing it.</p>
+    <div class="table-wrap">
+      <table class="wide">
+        <thead><tr><th>Stakeholders</th><th>Information to share</th><th>Communication method</th><th>Frequency</th><th>Responsible person</th></tr></thead>
+        <tbody id="cm-body"></tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="comm-methods">
+  <div class="wrap">
+    <h2>4. Types and forms of communication</h2>
+    <p class="intro">The communication methods the team will use and what each one is for.</p>
+    <div class="table-wrap">
+      <table class="wide">
+        <thead><tr><th>Communication method</th><th>Purpose</th><th>Type</th><th>Form</th></tr></thead>
+        <tbody id="meth-body"></tbody>
+      </table>
+    </div>
+    <p class="note" id="lab4-note"></p>
+  </div>
+</section>
+
+</div><!-- /#communication -->
+
+<div class="page-section" id="budget">
+
+<section class="block" id="budget-intro">
+  <div class="wrap">
+    <h2>Project Budget</h2>
+    <p class="intro" id="bud-intro"></p>
+    <div class="callout" id="bud-note"></div>
+  </div>
+</section>
+
+<section class="block" id="hr-budget">
+  <div class="wrap">
+    <h2>1. Human resources</h2>
+    <p class="intro">Each team member is paid only for the days they are responsible for in the project schedule (activity days &times; daily rate).</p>
+    <div class="table-wrap">
+      <table class="wide">
+        <thead><tr><th>No.</th><th>Role / position</th><th class="num">No. of staff</th><th class="num">Monthly rate (&#8369;)</th><th class="num">Daily rate (&#8369;)</th><th class="num">Days worked</th><th class="num">Total cost (&#8369;)</th><th>Source of rate</th></tr></thead>
+        <tbody id="hr-body"></tbody>
+        <tfoot id="hr-foot"></tfoot>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="consumables">
+  <div class="wrap">
+    <h2>2. Consumables and materials</h2>
+    <p class="intro">Items that are used up during the project or needed for operations.</p>
+    <div class="table-wrap">
+      <table class="wide">
+        <thead><tr><th>No.</th><th>Item</th><th>Description</th><th>Unit</th><th class="num">Quantity</th><th class="num">Unit cost (&#8369;)</th><th class="num">Total cost (&#8369;)</th><th>Source of price</th></tr></thead>
+        <tbody id="con-body"></tbody>
+        <tfoot id="con-foot"></tfoot>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="equipment">
+  <div class="wrap">
+    <h2>3. Equipment and tools</h2>
+    <p class="intro">Durable items used for developing, testing and presenting the system.</p>
+    <div class="table-wrap">
+      <table class="wide">
+        <thead><tr><th>No.</th><th>Equipment and tools</th><th>Description / specification</th><th class="num">Quantity</th><th class="num">Unit cost (&#8369;)</th><th class="num">Total cost (&#8369;)</th><th>Source of price</th></tr></thead>
+        <tbody id="eq-body"></tbody>
+        <tfoot id="eq-foot"></tfoot>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="utilities">
+  <div class="wrap">
+    <h2>4. Utilities and subscriptions</h2>
+    <p class="intro">Recurring services needed to develop, host and present the project.</p>
+    <div class="table-wrap">
+      <table class="wide">
+        <thead><tr><th>No.</th><th>Utility / subscription</th><th>Description</th><th class="num">Duration</th><th class="num">Cost per period (&#8369;)</th><th class="num">Total cost (&#8369;)</th><th>Source</th></tr></thead>
+        <tbody id="ut-body"></tbody>
+        <tfoot id="ut-foot"></tfoot>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="budget-summary">
+  <div class="wrap">
+    <h2>5. Total budget summary</h2>
+    <p class="intro">The total is calculated automatically from the costs entered in each category above.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Budget category</th><th class="num">Amount (&#8369;)</th><th>Share of total</th></tr></thead>
+        <tbody id="sum-body"></tbody>
+        <tfoot id="sum-foot"></tfoot>
+      </table>
+    </div>
+    <p class="note" id="lab5-note"></p>
+  </div>
+</section>
+
+</div><!-- /#budget -->
+
+</main>
+
+<footer>
+  <div class="wrap" id="footer"></div>
+</footer>
+</div> <!-- /.app-shell -->
+</div> <!-- /.app-canvas -->
+
+<!-- Image Lightbox & Avatar Crop Modal -->
+<div id="img-modal" class="modal-overlay" aria-hidden="true">
+  <div class="modal-content">
+    <button class="modal-close" id="modal-close-btn" aria-label="Close modal">&times;</button>
+    <div class="modal-body">
+      <div class="img-container">
+        <img id="modal-img" src="" alt="Enlarged view">
+      </div>
+      <div class="modal-controls" id="modal-controls">
+        <label for="crop-slider"><strong>Adjust Avatar Crop / Position:</strong></label>
+        <input type="range" id="crop-slider" min="0" max="100" value="42">
+        <div class="zoom-btns">
+          <button id="zoom-out-btn" class="btn-sm">- Zoom Out</button>
+          <button id="reset-zoom-btn" class="btn-sm">Reset</button>
+          <button id="zoom-in-btn" class="btn-sm">+ Zoom In</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ==========================================================
+   EDIT THIS SECTION ONLY.
+   Everything on the page (WBS, sequencing diagram, duration
+   table, Gantt chart, dates) is generated from this data.
+   ========================================================== */
+const PROJECT = {
+  title: "FindIt",
+  short: "FindIt",
+  tagline: "A proposed digital Lost & Found platform for JRMSU Main Campus that organizes lost and found item reports, making it easier for students to search for and potentially recover their belongings.",
+  startDate: "2026-10-05",              // must be a weekday, format YYYY-MM-DD
+  course: "Information Systems Project Management",
+  school: "Jose Rizal Memorial State University, Main Campus",
+  term: "1st Semester, A.Y. 2026-2027",
+  figmaUrl: "",                         // paste your Figma prototype link here (leave empty to hide the button)
+  problem: "When students lose items such as a phone, ID, bag, wallet, keys or school materials, they ask classmates, post in random group chats or search around campus. There is no single, organized place where students can check items reported as lost or found.",
+  solution: "FindIt is a proposed school Lost & Found Management System. It is designed to give students one organized platform for reporting, searching and managing lost and found items, with a claim and contact process to help coordinate an item's return.",
+  objectives: [
+    "Give students one place to report items they lost or found.",
+    "Make it easier to search reported items by category and status.",
+    "Provide item details and a claim and contact process for coordinating returns.",
+    "Let students view and manage the items they reported."
+  ],
+  deliverables: [
+    "Project schedule plan (WBS, sequencing, durations, Gantt chart)",
+    "Requirements and list of proposed features",
+    "FindIt Figma UI prototype",
+    "Project documentation",
+    "Project portfolio website and final presentation"
+  ]
+};
+
+const SCOPE_NOTE = "FindIt is currently a Figma UI prototype, not a fully developed working system. The features below are proposed features that show how the system would work if it were developed.";
+
+const FEATURES = [
+  { name: "Dashboard",    desc: "An overview of activity, with recently reported lost and found items." },
+  { name: "Lost Items",   desc: "Browse items that students reported as lost." },
+  { name: "Found Items",  desc: "Browse items that someone reported as found." },
+  { name: "Report Lost",  desc: "Submit details about something you lost." },
+  { name: "Report Found", desc: "Submit details about something you found." },
+  { name: "Search",       desc: "Look up items and narrow results with filters such as category and status." },
+  { name: "Item Details", desc: "See the full information for an item and proceed to claim it." },
+  { name: "My Reports",   desc: "View the items you personally reported." },
+  { name: "Messages",     desc: "Communicate with other users about a specific item." },
+  { name: "Profile",      desc: "Student account and user information." }
+];
+
+const HOW = [
+  "A student loses their ID, opens FindIt and selects Report Lost.",
+  "They enter the details of the ID, and the report appears in the system.",
+  "Another student finds an ID, selects Report Found and posts the details.",
+  "The owner searches FindIt and may identify their item.",
+  "They use the claim and contact process to coordinate its return."
+];
+
+const TEAM = [
+  { name: "John Chandler N. Caermare", key:"caermare", role: "Project Manager / Team Leader", email: "caermare.johnchandler@gmail.com", photo: "images/c.jpg" },
+  { name: "Earl Lawrence A. Dini-ay", key:"diniay", role: "System Analyst", email: "diniay.earllawrence@gmail.com", photo: "images/d.jpg" },
+  { name: "Daven Nathaniel Tan", key:"tan", role: "UI/UX Designer", email: "tan.davennathaniel@gmail.com", photo: "images/n.jpg" },
+  { name: "Leomer T. Benedicto", key:"benedicto", role: "Documentation Lead", email: "benedicto.leomer@gmail.com", photo: "images/b.jpg" },
+  { name: "Lev Anthony S. Pausal", key:"pausal", role: "Web and Presentation / QA Tester", email: "pausal.levanthony@gmail.com", photo: "images/p.jpg" }
+];
+
+// id: unique letter, dur: working days, pred: ids that must finish first, who: role
+const PHASES = [
+  { name: "Project initiation", tasks: [
+    { id:"A", name:"Define the problem and project scope",     dur:2, pred:[],    who:"Project Manager / Team Leader" },
+    { id:"B", name:"Identify target users and objectives",     dur:2, pred:["A"], who:"System Analyst" },
+    { id:"C", name:"Prepare project schedule plan",            dur:3, pred:["A"], who:"Project Manager / Team Leader" }
+  ]},
+  { name: "Requirements and analysis", tasks: [
+    { id:"D", name:"Gather student needs (survey and interviews)", dur:4, pred:["B"], who:"System Analyst" },
+    { id:"E", name:"Define proposed features and user flows",  dur:3, pred:["D"], who:"System Analyst" },
+    { id:"F", name:"Write system requirements",                dur:3, pred:["E"], who:"System Analyst" }
+  ]},
+  { name: "UI/UX design in Figma", tasks: [
+    { id:"G", name:"Create wireframes for all screens",        dur:5, pred:["F"],     who:"UI/UX Designer" },
+    { id:"H", name:"Set up style guide and components",        dur:3, pred:["E"],     who:"UI/UX Designer" },
+    { id:"I", name:"Design high-fidelity screens",             dur:8, pred:["G","H"], who:"UI/UX Designer" },
+    { id:"J", name:"Build clickable Figma prototype",          dur:4, pred:["I"],     who:"UI/UX Designer" }
+  ]},
+  { name: "Review and revision", tasks: [
+    { id:"K", name:"Usability review with students",           dur:3, pred:["J"], who:"System Analyst" },
+    { id:"L", name:"Revise design based on feedback",          dur:3, pred:["K"], who:"UI/UX Designer" }
+  ]},
+  { name: "Documentation and presentation", tasks: [
+    { id:"M", name:"Write project documentation",              dur:5, pred:["J"],     who:"Documentation Lead" },
+    { id:"N", name:"Build the project portfolio website",      dur:3, pred:["C","J"], who:"Web and Presentation" },
+    { id:"O", name:"Final presentation",                       dur:2, pred:["L","M","N"], who:"All members" }
+  ]}
+];
+
+/* ===== Laboratory Exercise 3: Project Team Formation ===== */
+const LAB3 = { title: "Laboratory Exercise 3 \u2013 Project Team Formation", date: "10/09/26", section: "BSIS 3rd Year" };
+
+const ASSESS = [
+  { key:"caermare", skills:"Leadership, project planning and scheduling (WBS and critical path), coordination, communication",
+    tasks:"Defining scope, preparing the schedule plan, monitoring progress, leading meetings",
+    role:"Project Manager / Team Leader", type:"Deliverer",
+    reason:"John set the scope and schedule plan and keeps work on track. Fits leading, monitoring progress and reporting." },
+  { key:"diniay", skills:"Requirements gathering, survey and interview skills, analysis, defining user flows, technical writing",
+    tasks:"Gathering student needs, defining features and user flows, writing requirements, leading the usability review",
+    role:"System Analyst", type:"Fixer",
+    reason:"Earl turns the problem into clear needs, features and requirements. Fits analyzing what users need." },
+  { key:"tan", skills:"UI/UX design, wireframing, visual design, Figma prototyping, usability and consistency",
+    tasks:"Making wireframes, setting up the style guide, designing screens, building the Figma prototype",
+    role:"UI/UX Designer", type:"Prototype",
+    reason:"Daven builds the visible first version of the idea. FindIt is a Figma prototype, so this fits." },
+  { key:"benedicto", skills:"Writing, organizing information, proofreading, attention to detail",
+    tasks:"Writing the project documentation, compiling team outputs, checking accuracy",
+    role:"Documentation Lead", type:"Perfector",
+    reason:"Leomer handles the documentation and refines details so the team's record is accurate and consistent." },
+  { key:"pausal", skills:"Web page building (HTML, CSS, JavaScript), presentation design, checking for errors",
+    tasks:"Building the portfolio website, preparing the final presentation, checking for mistakes",
+    role:"Web and Presentation", type:"Finisher",
+    reason:"Lev builds the website and final presentation, the last pieces that present the project." }
+];
+
+const ROLES = [
+  { role:"Project Manager / Team Leader", key:"caermare",
+    resp:["Overall project planning and coordination","Monitors progress against the schedule","Facilitates team communication and meetings","Reports to the instructor / stakeholders"],
+    deliv:["Project plan and schedule updates","Progress reports and meeting minutes"] },
+  { role:"System Analyst", key:"diniay",
+    resp:["Gathers and analyzes student needs and requirements","Defines proposed features and user flows","Liaises with students (survey, interviews, usability review)"],
+    deliv:["Requirements document","Feature list and user flows"] },
+  { role:"UI/UX Designer", key:"tan",
+    resp:["Designs the user interface and experience","Creates wireframes and prototypes","Ensures usability and accessibility"],
+    deliv:["Wireframes and mockups","Interactive prototype / style guide"] },
+  { role:"Documentation Lead", key:"benedicto",
+    resp:["Writes and organizes the project documentation","Compiles the requirements, schedule and design outputs into one record","Checks documents for accuracy and consistency"],
+    deliv:["Project documentation","Compiled and proofread document set"] },
+  { role:"Web and Presentation", key:"pausal",
+    resp:["Builds and maintains the project portfolio website","Adds the required Laboratory Exercise 3 sections to the website","Prepares the final presentation"],
+    deliv:["Project portfolio website","Final presentation slides"] },
+  { role:"QA / Tester", key:"pausal",
+    resp:["Checks the Figma prototype and website for errors and inconsistencies","Supports the usability review with students","Records issues and verifies that fixes are made"],
+    deliv:["Prototype and website review checklist","Issue log with review results"] }
+];
+
+const ORG = {
+  lead: { role:"Project Manager / Team Leader", key:"caermare",
+    points:["Overall project planning and coordination","Monitors progress and schedule","Facilitates team communication","Reports to stakeholders"] },
+  members: [
+    { role:"System Analyst", key:"diniay",
+      points:["Gathers and analyzes requirements","Defines features and user flows","Liaises with students","Leads the usability review"] },
+    { role:"UI/UX Designer", key:"tan",
+      points:["Designs user interface and experience","Creates wireframes and prototypes","Ensures usability and accessibility"] },
+    { role:"Documentation Lead", key:"benedicto",
+      points:["Writes the project documentation","Compiles the team's outputs","Checks accuracy and consistency","Supports the final presentation"] },
+    { role:"Web and Presentation & QA / Tester", key:"pausal",
+      points:["Builds the portfolio website","Prepares the final presentation","Checks prototype and website for errors","Reports issues; verifies fixes"] }
+  ]
+};
+
+// who: member key, support: member keys
+const MATRIX = [
+  { act:"Project Initiation",            who:"caermare",  role:"Project Manager / Team Leader", support:["diniay"],            ids:"A, B, C" },
+  { act:"Requirements and Analysis",     who:"diniay",    role:"System Analyst",                support:["caermare"],          ids:"D, E, F" },
+  { act:"UI/UX Design in Figma",         who:"tan",       role:"UI/UX Designer",                support:["diniay"],            ids:"G, H, I, J" },
+  { act:"Usability Review with Students",who:"diniay",    role:"System Analyst",                support:["pausal","tan"],      ids:"K" },
+  { act:"Design Revision",               who:"tan",       role:"UI/UX Designer",                support:["diniay"],            ids:"L" },
+  { act:"Project Documentation",         who:"benedicto", role:"Documentation Lead",            support:["caermare","diniay"], ids:"M" },
+  { act:"Portfolio Website",             who:"pausal",    role:"Web and Presentation",          support:["tan"],               ids:"N" },
+  { act:"Final Presentation",            who:"caermare",  role:"Project Manager / Team Leader", support:"all",                 ids:"O" }
+];
 
 /* ===== Laboratory Exercise 4: Project Communication Plan ===== */
-.muted-role { font-size: 13px; color: var(--muted-dim); }
-#communication table.wide { min-width: 860px; }
-#communication table.wide td { vertical-align: top; }
+const LAB4 = { title: "Laboratory Exercise 4 \u2013 Project Communication Plan", section: "BSIS 3rd Year" };
 
-/* ===== Laboratory Exercise 5: Project Budget ===== */
-#budget th.num, #budget td.num { text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; }
-#budget table.wide { min-width: 1020px; }
-#budget table.wide td { vertical-align: top; }
-#budget a { color: var(--accent); }
-#budget tfoot td { font-weight: 700; background: rgba(37, 99, 235, 0.08); border-top: 2px solid var(--accent); }
-#budget tfoot tr.grand-total td { font-size: 1.1rem; background: var(--accent); color: #fff; border-top: 0; }
-.share { display: flex; align-items: center; gap: 12px; min-width: 180px; }
-.share-bar { flex: 1; height: 10px; border-radius: 999px; background: rgba(37, 99, 235, 0.14); overflow: hidden; }
-.share-bar span { display: block; height: 100%; border-radius: 999px; background: var(--accent); }
-.share-pct { font-weight: 600; font-variant-numeric: tabular-nums; min-width: 52px; text-align: right; }
+const COMM_INTRO = "This simplified plan explains how the FindIt team will communicate, share information and coordinate with its stakeholders from project initiation to the final presentation.";
+const COMM_NOTE = "Communication follows the same schedule and roles as the rest of this portfolio: the Project Manager / Team Leader coordinates, and each member shares the information that belongs to their own role.";
+
+// key: team member key (shows the member's name); otherwise use name
+const STAKEHOLDERS = [
+  { who:"Project Manager",        key:"caermare",  role:"Leads and coordinates the team, monitors progress against the schedule, facilitates meetings and reports to the instructor.", type:"Internal" },
+  { who:"System Analyst",         key:"diniay",    role:"Gathers student needs, defines features and user flows, writes the requirements and leads the usability review.", type:"Internal" },
+  { who:"UI/UX Designer",         key:"tan",       role:"Designs the wireframes, screens and clickable Figma prototype of FindIt.", type:"Internal" },
+  { who:"Documentation Lead",     key:"benedicto", role:"Writes and compiles the project documentation and checks it for accuracy and consistency.", type:"Internal" },
+  { who:"Web and Presentation / QA Tester", key:"pausal", role:"Builds the portfolio website and final presentation, and checks the prototype and website for errors.", type:"Internal" },
+  { who:"Project Sponsor / Instructor", name:"Course instructor, Information Systems Project Management", role:"Gives direction, reviews and approves deliverables, and evaluates the project.", type:"External" },
+  { who:"Client", name:"JRMSU Main Campus (office that would manage lost and found items)", role:"The proposed owner of the system. Confirms that FindIt fits how lost and found items are handled on campus.", type:"External" },
+  { who:"End Users", name:"JRMSU students", role:"Would use FindIt to report, search and claim lost and found items. Give needs and feedback through the survey, interviews and usability review.", type:"External" }
+];
+
+const COMM_OBJECTIVES = [
+  "To keep team members informed about project progress and upcoming schedule activities.",
+  "To make sure every member understands their role, tasks and deadlines.",
+  "To report project status and deliverables to the instructor (project sponsor) on time.",
+  "To collect clear and timely feedback from students (end users) on their needs and on the FindIt prototype.",
+  "To resolve issues, risks and disagreements quickly so the critical path activities are not delayed.",
+  "To keep project files and documents organized so all members always use the latest version."
+];
+
+// who: member key. to: label or member key
+const COMM_MATRIX = [
+  { to:"Project Manager",    info:"Task progress, issues and risks from each member", method:"Group meeting", freq:"Weekly", who:"all" },
+  { to:"Team Members",       info:"Daily updates, announcements, task reminders and deadlines", method:"Group chat", freq:"Daily", who:"caermare" },
+  { to:"Team Members",       info:"Schedule updates and task assignments (WBS, Gantt chart)", method:"Group meeting", freq:"Weekly", who:"caermare" },
+  { to:"System Analyst",     info:"Student needs, requirements and feature list changes", method:"Group chat and shared documents", freq:"As needed", who:"diniay" },
+  { to:"UI/UX Designer",     info:"Approved features and user flows; design feedback from the usability review", method:"Group chat and shared Figma file", freq:"As needed", who:"diniay" },
+  { to:"Documentation Lead", info:"Finished outputs (requirements, schedule, designs) to compile into the documentation", method:"Shared folder and email", freq:"After each completed phase", who:"caermare" },
+  { to:"Web and Presentation / QA Tester", info:"Final content for the website; errors and issues found in the prototype", method:"Group chat and shared folder", freq:"As needed", who:"tan" },
+  { to:"Project Sponsor / Instructor", info:"Project status, deliverables for checking and questions for approval", method:"Email and face-to-face consultation", freq:"Every milestone or as scheduled by the instructor", who:"caermare" },
+  { to:"Client",             info:"Proposed features, scope and the FindIt prototype for confirmation", method:"Consultation / presentation", freq:"Once per phase or as needed", who:"diniay" },
+  { to:"End Users",          info:"System feedback, needs and usability review results", method:"Interview and survey", freq:"As needed", who:"diniay" }
+];
+
+const COMM_METHODS = [
+  { method:"Group Chat", purpose:"For daily updates, announcements, quick questions and task reminders.", type:"Informal", form:"Written" },
+  { method:"Group Meeting", purpose:"To review task progress against the schedule, discuss issues and agree on the next tasks. Minutes are recorded.", type:"Formal", form:"Verbal (face-to-face or online)" },
+  { method:"Email", purpose:"For official messages and file submissions to the instructor and the client, and for records that need to be kept.", type:"Formal", form:"Written" },
+  { method:"Interview / Survey", purpose:"To gather needs and feedback from students (end users), including the usability review.", type:"Formal", form:"Verbal and written" },
+  { method:"Shared Folder / Shared Files", purpose:"To keep one organized copy of documents, the Figma file and the website so everyone uses the latest version.", type:"Formal", form:"Written / digital" },
+  { method:"Consultation", purpose:"To ask the instructor or client for guidance, approval or clarification on deliverables.", type:"Formal", form:"Verbal (face-to-face)" }
+];
+
+/* ===== Laboratory Exercise 5: Project Budget =====
+   Edit quantities, unit costs and sources here. Every total on the page, including the
+   Total Budget Summary, is calculated automatically from these numbers. */
+const LAB5 = { title: "Laboratory Exercise 5 \u2013 Project Budget", section: "BSIS 3rd Year" };
+const BUDGET = {
+  workingDaysPerMonth: 22,
+  durationMonths: 2,
+  intro: "This budget estimates the cost of building the FindIt Lost and Found System prototype, from project initiation to the final presentation.",
+  note: "All prices are estimates in Philippine pesos (\u20b1) based on the online sources listed, checked in November 2026, and may change. The project runs 39 working days (about 2 months). Laptops, a printer and a router are listed as the equipment the team needs even if members already own similar items."
+};
+
+// Human resources: paid per day worked on the schedule. key = team member (see MEM)
+const HR_BUDGET = [
+  { role:"Project Manager",       key:"caermare",  staff:1, monthly:74145, days:7,  acts:"A, C, O",
+    src:{ name:"PayScale Philippines, IT Project Manager average (\u20b1889,737 per year \u00f7 12)" } },
+  { role:"System Analyst",        key:"diniay",    staff:1, monthly:40000, days:17, acts:"B, D, E, F, K, O",
+    src:{ name:"NodeFlair, Systems Analyst median salary in the Philippines", url:"https://nodeflair.com/salaries/philippines-system-analyst-salary" } },
+  { role:"UI/UX Designer",        key:"tan",       staff:1, monthly:40000, days:25, acts:"G, H, I, J, L, O",
+    src:{ name:"Second Talent, Philippines junior UI/UX Designer range (\u20b130K\u2013\u20b150K, midpoint)" } },
+  { role:"Documentation Lead",    key:"benedicto", staff:1, monthly:29908, days:7,  acts:"M, O",
+    src:{ name:"Indeed Philippines, Technical Writer average salary", url:"https://ph.indeed.com/career/technical-writer/salaries" } },
+  { role:"Web and Presentation",  key:"pausal",    staff:1, monthly:51838, days:5,  acts:"N, O",
+    src:{ name:"Indeed Philippines, Front-end Developer average salary" } },
+  { role:"QA Tester",             key:"pausal",    staff:1, monthly:36436, days:3,  acts:"K (support)",
+    src:{ name:"Indeed Philippines, Test Analyst average salary (closest match)", url:"https://ph.indeed.com/career/test-analyst/salaries" } }
+];
+
+const CONSUMABLES = [
+  { item:"Bond paper", desc:"A4 / short, 70 gsm, 500 sheets per ream, for printing the documentation and drafts", unit:"ream", qty:5, cost:240,
+    src:{ name:"SM Stationery, Hard Copy Bond Paper Substance 20", url:"https://smstationery.com.ph/collections/reams-copy-paper/products/hard-copy-copy-paper-substance-20-500-sheets" } },
+  { item:"Printer ink, black", desc:"Epson 003 black ink, 65 ml bottle (for the Epson L3210 printer)", unit:"bottle", qty:2, cost:280,
+    src:{ name:"PSA Request for Quotation 2024-0600-02-022 (government supply price)", url:"https://procurement.psa.gov.ph/sites/default/files/2024-0600-02-022%20BRFQ.pdf" } },
+  { item:"Printer ink, color", desc:"Epson 003 cyan, magenta and yellow ink, 65 ml bottles (1 of each)", unit:"bottle", qty:3, cost:280,
+    src:{ name:"PSA Request for Quotation 2024-0600-02-022 (government supply price)", url:"https://procurement.psa.gov.ph/sites/default/files/2024-0600-02-022%20BRFQ.pdf" } },
+  { item:"USB flash drive", desc:"SanDisk Cruzer Blade 32GB, for backups and file transfer", unit:"piece", qty:2, cost:388,
+    src:{ name:"Villman Computers", url:"https://villman.com/Product-Detail/SANDISK_32GB_CRUZERBLADE" } },
+  { item:"Ballpen", desc:"Black, 0.5 mm, for survey forms, interviews and notes", unit:"piece", qty:10, cost:15,
+    src:{ name:"PSA Request for Quotation 2024-0645-08-086 (government supply price)", url:"https://procurement.psa.gov.ph/sites/default/files/2024-0645-08-086-BRFQ.pdf" } }
+];
+
+const EQUIPMENT = [
+  { item:"Laptop", desc:"ASUS Vivobook Go 15 (E1504FA-BQ2353W), AMD Ryzen 3 7320U, 8GB RAM, 512GB SSD, Windows 11. One per team member", qty:5, cost:25995,
+    src:{ name:"Villman Computers", url:"https://villman.com/Product-Detail/asus_vivobook-go-15-e1504fa-bq2353w--156-fhd--amd-ryzen-3-7320u--amd-radeon-graphics--8gb-lpddr5--512gb-ssd" } },
+  { item:"Wi-Fi router", desc:"Tenda AC6 v5.0 AC1200 dual-band router, for the team's meeting and testing network", qty:1, cost:1169,
+    src:{ name:"Villman Computers", url:"https://villman.com/Product-Detail/tenda-_ac6-v50-ac1200-smart-dual-band-wifi-router" } },
+  { item:"Printer", desc:"Epson EcoTank L3210 A4 all-in-one ink tank printer (print, scan, copy), for the documentation", qty:1, cost:8795,
+    src:{ name:"Epson Philippines", url:"https://www.epson.com.ph/p/C11CJ68505" } }
+];
+
+const UTILITIES = [
+  { item:"Internet service", desc:"PLDT Home Fiber Unli Plan 1299, up to 50 Mbps (monthly service fee)", months:2, per:1299,
+    src:{ name:"PLDT Home", url:"https://pldthome.com/fiber-upgrade" } },
+  { item:"Electricity", desc:"Estimated 35 kWh per month (laptops, router and printer) at \u20b113.33 per kWh", months:2, per:466.55,
+    src:{ name:"SunStar Davao, residential rate for Oct 11\u2013Nov 10, 2026 (Mindanao reference rate)", url:"https://www.sunstar.com.ph/davao/power-supply-stable-despite-rate-hike" } },
+  { item:"Figma (design tool)", desc:"Figma Education plan for verified students, used for the UI/UX design and prototype", months:2, per:0,
+    src:{ name:"Figma pricing FAQ (free Education plan)", url:"https://www.figma.com/pricing-faq/" } },
+  { item:"Website hosting", desc:"GitHub Pages hosting for the project website (public repository, GitHub Free)", months:2, per:0,
+    src:{ name:"GitHub Docs, Creating a GitHub Pages site", url:"https://docs.github.com/en/pages/getting-started-with-github-pages/creating-a-github-pages-site" } }
+];
+/* ========================= END OF EDITABLE DATA ========================= */
+
+/* ---------- helpers ---------- */
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const initials = n => n.split(/\s+/).map(w => w[0]).join('').slice(0,2).toUpperCase();
+const cvar = i => `var(--c${i % 6})`;
+
+/* ---------- schedule calculation (critical path method) ---------- */
+const acts = [];
+PHASES.forEach((p, pi) => p.tasks.forEach((t, ti) =>
+  acts.push({ ...t, pred: t.pred || [], phase: pi, wbs: `${pi+1}.${ti+1}` })));
+const byId = {};
+acts.forEach(a => byId[a.id] = a);
+acts.forEach(a => a.succ = []);
+acts.forEach(a => a.pred.forEach(p => byId[p].succ.push(a.id)));
+
+function calcEF(a){
+  if (a.ef !== undefined) return a.ef;
+  a.es = Math.max(0, ...a.pred.map(p => calcEF(byId[p])));
+  a.ef = a.es + a.dur;
+  return a.ef;
+}
+acts.forEach(calcEF);
+const TOTAL = Math.max(...acts.map(a => a.ef));
+
+function calcLS(a){
+  if (a.ls !== undefined) return a.ls;
+  a.lf = a.succ.length ? Math.min(...a.succ.map(s => calcLS(byId[s]))) : TOTAL;
+  a.ls = a.lf - a.dur;
+  return a.ls;
+}
+acts.forEach(calcLS);
+acts.forEach(a => { a.slack = a.ls - a.es; a.crit = a.slack === 0; });
+
+function calcLevel(a){
+  if (a.level !== undefined) return a.level;
+  a.level = a.pred.length ? 1 + Math.max(...a.pred.map(p => calcLevel(byId[p]))) : 0;
+  return a.level;
+}
+acts.forEach(calcLevel);
+
+/* ---------- dates (working days only) ---------- */
+const [sy, sm, sd] = PROJECT.startDate.split('-').map(Number);
+const START = new Date(sy, sm - 1, sd);
+function workday(k){
+  const d = new Date(START);
+  while (d.getDay() === 0 || d.getDay() === 6) d.setDate(d.getDate() + 1);
+  let c = 0;
+  while (c < k){ d.setDate(d.getDate() + 1); if (d.getDay() !== 0 && d.getDay() !== 6) c++; }
+  return d;
+}
+const fmt = d => d.toLocaleDateString('en-PH', { month:'short', day:'numeric' });
+const fmtY = d => d.toLocaleDateString('en-PH', { month:'short', day:'numeric', year:'numeric' });
+const startOf = a => workday(a.es);
+const endOf = a => workday(a.ef - 1);
+const critIds = acts.filter(a => a.crit).sort((a,b) => a.es - b.es).map(a => a.id);
+
+/* ---------- page header ---------- */
+document.title = `${PROJECT.title} | JRMSU Lost & Found System`;
+$('#brand').textContent = PROJECT.short || PROJECT.title;
+$('#h-title').textContent = PROJECT.title;
+$('#h-tagline').textContent = PROJECT.tagline;
+$('#facts').innerHTML = [
+  ['Start', fmtY(workday(0))],
+  ['Finish', fmtY(workday(TOTAL - 1))],
+  ['Duration', `${TOTAL} working days`],
+  ['Activities', acts.length],
+  ['Status', 'Figma prototype']
+].map(([k, v]) => `<div><dt>${k}</dt><dd>${esc(v)}</dd></div>`).join('');
+
+/* hero strip: mini schedule with activity names, week numbers and durations */
+(function(){
+  const weeks = Math.ceil(TOTAL / 5);
+  const head = `<div class="strip-head"><div></div><div class="strip-weeks">` +
+    Array.from({length: weeks}, (_, i) => `<span>W${i+1}</span>`).join('') +
+    `</div></div>`;
+  const rows = acts.map((a, i) => `
+    <div class="strip-line">
+      <div class="strip-name" title="${esc(a.name)}"><b>${a.id}</b>${esc(a.name)}</div>
+      <div class="strip-track">
+        <div class="strip-bar" title="${esc(a.id)}: ${fmt(startOf(a))} to ${fmt(endOf(a))} (${a.dur} days)"
+          style="left:${a.es/TOTAL*100}%;width:${a.dur/TOTAL*100}%;background:${cvar(a.phase)};animation-delay:${i*45}ms">${a.dur}d</div>
+      </div>
+    </div>`).join('');
+  const s = $('#strip');
+  s.style.setProperty('--weeks', weeks);
+  s.innerHTML = head + rows;
+})();
+
+/* ---------- overview ---------- */
+$('#ov-left').innerHTML = `
+  <h3>The problem</h3><p>${esc(PROJECT.problem)}</p>
+  <h3>Our solution</h3><p>${esc(PROJECT.solution)}</p>`;
+$('#ov-right').innerHTML = `
+  <h3>Objectives</h3><ul>${PROJECT.objectives.map(o => `<li>${esc(o)}</li>`).join('')}</ul>
+  <h3>Deliverables</h3><ul>${PROJECT.deliverables.map(o => `<li>${esc(o)}</li>`).join('')}</ul>`;
+
+/* ---------- features ---------- */
+$('#scope-note').textContent = SCOPE_NOTE;
+$('#feat-list').innerHTML = FEATURES.map(f => `<article><h3>${esc(f.name)}</h3><p>${esc(f.desc)}</p></article>`).join('');
+$('#how-list').innerHTML = HOW.map(s => `<li>${esc(s)}</li>`).join('');
+if (PROJECT.figmaUrl) $('#h-link').innerHTML = `<a class="btn" href="${esc(PROJECT.figmaUrl)}" target="_blank" rel="noopener">View the Figma prototype</a>`;
+
+/* ---------- WBS ---------- */
+$('#wbs-chart').innerHTML = `
+  <div class="wbs-root">${esc(PROJECT.title)}</div>
+  <div class="wbs-phases" style="--n:${PHASES.length}">
+    ${PHASES.map((p, pi) => `
+      <div class="wbs-phase">
+        <h3 style="background:${cvar(pi)}">${pi+1}. ${esc(p.name)}</h3>
+        <ul>${acts.filter(a => a.phase === pi).map(a => `<li><b>${a.wbs}</b>${esc(a.name)}</li>`).join('')}</ul>
+      </div>`).join('')}
+  </div>`;
+
+/* ---------- activity sequencing: network diagram ---------- */
+(function(){
+  const W = 176, H = 64, GX = 56, GY = 16, PAD = 14;
+  const levels = [];
+  acts.forEach(a => (levels[a.level] = levels[a.level] || []).push(a));
+  const maxRows = Math.max(...levels.map(c => c.length));
+  const colH = maxRows * H + (maxRows - 1) * GY;
+  levels.forEach((col, li) => {
+    const off = (colH - (col.length * H + (col.length - 1) * GY)) / 2;
+    col.forEach((a, i) => { a.x = PAD + li * (W + GX); a.y = PAD + off + i * (H + GY); });
+  });
+  const svgW = PAD * 2 + levels.length * W + (levels.length - 1) * GX;
+  const svgH = PAD * 2 + colH;
+
+  const wrap = (s, n) => {
+    const lines = [''];
+    s.split(' ').forEach(w => {
+      const cur = lines[lines.length - 1];
+      if (cur && (cur + ' ' + w).length > n) lines.push(w);
+      else lines[lines.length - 1] = (cur ? cur + ' ' : '') + w;
+    });
+    if (lines.length > 2){ lines[1] = lines.slice(1).join(' '); lines.length = 2; }
+    if (lines[1] && lines[1].length > n) lines[1] = lines[1].slice(0, n - 1) + '\u2026';
+    return lines;
+  };
+
+  const edges = [];
+  acts.forEach(a => a.pred.forEach(pid => {
+    const p = byId[pid];
+    const crit = a.crit && p.crit && a.es === p.ef;
+    const x1 = p.x + W, y1 = p.y + H/2, x2 = a.x, y2 = a.y + H/2;
+    edges.push({ crit, d: `M${x1},${y1} C${x1+28},${y1} ${x2-28},${y2} ${x2},${y2}` });
+  }));
+
+  const boxes = acts.map(a => {
+    const lines = wrap(a.name, 25);
+    return `<g><title>${esc(a.id)}: ${esc(a.name)} (${a.dur} days)</title>
+      <rect class="n-box ${a.crit ? 'crit' : ''}" x="${a.x}" y="${a.y}" width="${W}" height="${H}" rx="6"/>
+      <rect x="${a.x}" y="${a.y}" width="6" height="${H}" rx="3" fill="${cvar(a.phase)}"/>
+      <text class="n-id" x="${a.x+16}" y="${a.y+18}">${esc(a.id)}  \u00b7  ${a.dur} days</text>
+      ${lines.map((l, i) => `<text class="n-txt" x="${a.x+16}" y="${a.y+35+i*14}">${esc(l)}</text>`).join('')}
+    </g>`;
+  }).join('');
+
+  $('#net').innerHTML = `<svg width="${svgW}" height="${svgH}" viewBox="0 0 ${svgW} ${svgH}" role="img"
+      aria-label="Network diagram showing the order of project activities">
+    <defs>
+      <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" style="fill:var(--line-strong)"/></marker>
+      <marker id="ahc" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" style="fill:var(--crit)"/></marker>
+    </defs>
+    ${edges.filter(e => !e.crit).map(e => `<path class="edge" d="${e.d}" marker-end="url(#ah)"/>`).join('')}
+    ${edges.filter(e => e.crit).map(e => `<path class="edge crit" d="${e.d}" marker-end="url(#ahc)"/>`).join('')}
+    ${boxes}
+  </svg>`;
+
+  $('#net-legend').innerHTML =
+    `<span><i class="sw critline"></i> Critical path: ${critIds.join(' \u2192 ')}</span>` +
+    PHASES.map((p, i) => `<span><i class="sw" style="background:${cvar(i)}"></i>${esc(p.name)}</span>`).join('');
+
+  $('#seq-body').innerHTML = acts.map(a => `<tr class="${a.crit ? 'crit-row' : ''}">
+    <td><b>${a.id}</b></td><td>${esc(a.name)}</td>
+    <td>${a.pred.length ? a.pred.join(', ') : 'None (start)'}</td>
+    <td>${a.succ.length ? a.succ.join(', ') : 'None (end)'}</td>
+    <td>Finish-to-start</td></tr>`).join('');
+})();
+
+/* ---------- duration table ---------- */
+$('#dur-body').innerHTML = acts.map(a => `<tr class="${a.crit ? 'crit-row' : ''}">
+  <td>${a.wbs}</td><td><b>${a.id}</b></td><td>${esc(a.name)}</td><td>${esc(a.who)}</td>
+  <td class="num">${a.dur}</td><td>${fmt(startOf(a))}</td><td>${fmt(endOf(a))}</td>
+  <td class="num">${a.slack}</td><td>${a.crit ? '<span class="tag">Critical</span>' : ''}</td></tr>`).join('');
+$('#dur-foot').innerHTML = `<td colspan="4">Total project duration (longest path)</td>
+  <td class="num">${TOTAL}</td><td>${fmt(workday(0))}</td><td>${fmt(workday(TOTAL-1))}</td><td colspan="2"></td>`;
+
+/* ---------- Gantt chart ---------- */
+(function(){
+  const weeks = Math.ceil(TOTAL / 5);
+  let html = `<div class="g-row g-head"><div class="g-label">Activity</div><div class="g-track">` +
+    Array.from({length: weeks}, (_, i) => `<span><b>Week ${i+1}</b>${fmt(workday(i*5))}</span>`).join('') +
+    `</div></div>`;
+  PHASES.forEach((p, pi) => {
+    const list = acts.filter(a => a.phase === pi);
+    const s = Math.min(...list.map(a => a.es)), e = Math.max(...list.map(a => a.ef));
+    html += `<div class="g-row g-phase"><div class="g-label">${pi+1}. ${esc(p.name)}</div>
+      <div class="g-track"><div class="g-sum" style="left:${s/TOTAL*100}%;width:${(e-s)/TOTAL*100}%;background:${cvar(pi)}"></div></div></div>`;
+    list.forEach(a => {
+      html += `<div class="g-row"><div class="g-label" title="${esc(a.name)}"><b>${a.id}</b>${esc(a.name)}</div>
+        <div class="g-track"><div class="g-bar ${a.crit ? 'crit' : ''}"
+          style="left:${a.es/TOTAL*100}%;width:${a.dur/TOTAL*100}%;background:${cvar(a.phase)}"
+          title="${esc(a.id)}: ${fmt(startOf(a))} to ${fmt(endOf(a))} (${a.dur} days)">${a.dur}d</div></div></div>`;
+    });
+  });
+  const g = $('#gantt-chart');
+  g.style.setProperty('--weeks', weeks);
+  g.innerHTML = html;
+  $('#g-legend').innerHTML =
+    PHASES.map((p, i) => `<span><i class="sw" style="background:${cvar(i)}"></i>${esc(p.name)}</span>`).join('') +
+    `<span><i class="sw" style="outline:2px solid var(--crit);outline-offset:1px;background:var(--line-strong)"></i>Critical path activity</span>`;
+})();
+
+/* ---------- team ---------- */
+$('#team-intro').textContent = `${PROJECT.course} \u2022 ${PROJECT.term}`;
+$('#team-list').innerHTML = TEAM.map((m, i) => `
+  <article class="member">
+    <div class="avatar" style="background:${cvar(i)}" aria-hidden="true">
+      ${m.photo ? `<img src="${esc(m.photo)}" alt="${esc(m.name)}">` : esc(initials(m.name))}
+    </div>
+    <h3>${esc(m.name)}</h3><p>${esc(m.role)}</p>
+    <a href="mailto:${esc(m.email)}">${esc(m.email)}</a>
+  </article>`).join('');
+$('#contact').innerHTML = `<b>Questions about this project?</b><br>Email any team member above, or write to the project manager at
+  <a href="mailto:${esc(TEAM[0].email)}">${esc(TEAM[0].email)}</a>.`;
+$('#footer').textContent = `${PROJECT.title} \u2022 ${PROJECT.course} \u2022 ${PROJECT.school} \u2022 ${PROJECT.term}`;
+
+
+/* ---------- Laboratory Exercise 3 sections ---------- */
+const MEM = {};
+TEAM.forEach(m => MEM[m.key] = m);
+// "Caermare, John Chandler" style, as written in the lab exercise
+const lastFirst = m => { const w = m.name.split(' '); const last = w[w.length-1]; const first = w.slice(0, -1).filter(x => !/^[A-Z]\.$/.test(x)).join(' '); return `${last}, ${first}`; };
+const lf = k => esc(lastFirst(MEM[k]));
+const ul = a => `<ul class="cell-list">${a.map(x => `<li>${esc(x)}</li>`).join('')}</ul>`;
+
+$('#assess-body').innerHTML = ASSESS.map(a => `<tr>
+  <td><b>${lf(a.key)}</b></td><td>${esc(a.skills)}</td><td>${esc(a.tasks)}</td>
+  <td><b>${esc(a.role)}</b></td><td><span class="tag type">${esc(a.type)}</span></td><td>${esc(a.reason)}</td></tr>`).join('');
+$('#lab-note').textContent = `${LAB3.title} \u2022 ${LAB3.section} \u2022 ${LAB3.date}`;
+
+$('#roles-body').innerHTML = ROLES.map(r => `<tr>
+  <td><b>${esc(r.role)}</b></td><td>${lf(r.key)}</td><td>${ul(r.resp)}</td><td>${ul(r.deliv)}</td></tr>`).join('');
+
+(function(){
+  const node = (n, cls) => `<div class="org-node ${cls||''}">
+      <h3>${esc(n.role)}</h3><b class="org-name">${lf(n.key)}</b>${ul(n.points)}</div>`;
+  $('#org-intro').textContent = `Project: ${PROJECT.title}. The Project Manager / Team Leader coordinates the team, and each member below owns one area of the project.`;
+  $('#org-chart').innerHTML = `
+    <div class="org-top">${node(ORG.lead, 'lead')}</div>
+    <div class="org-stem"></div>
+    <div class="org-kids">${ORG.members.map((m, i) => `<div class="org-kid" style="--c:${cvar(i+1)}">${node(m)}</div>`).join('')}</div>`;
+})();
+
+(function(){
+  const lead = {}, supp = {};
+  MATRIX.forEach(m => {
+    (lead[m.who] = lead[m.who] || []).push(m.act);
+    const sup = m.support === 'all' ? TEAM.map(t => t.key).filter(k => k !== m.who) : m.support;
+    sup.forEach(k => (supp[k] = supp[k] || []).push(m.act));
+  });
+  $('#resp-list').innerHTML = TEAM.map((m, i) => {
+    const mine = ROLES.filter(r => r.key === m.key);
+    return `<article class="resp-card" style="--c:${cvar(i)}">
+      <div class="resp-head">
+        <div class="avatar" style="background:${cvar(i)}" aria-hidden="true">${m.photo ? `<img src="${esc(m.photo)}" alt="${esc(m.name)}">` : esc(initials(m.name))}</div>
+        <div><h3>${esc(m.name)}</h3><p>${mine.map(r => esc(r.role)).join(' + ')}</p></div>
+      </div>
+      ${mine.map(r => `<h4>${mine.length > 1 ? esc(r.role) + ': ' : ''}Responsibilities</h4>${ul(r.resp)}
+        <h4>${mine.length > 1 ? esc(r.role) + ': ' : ''}Deliverables</h4>${ul(r.deliv)}`).join('')}
+      <h4>Leads these activities</h4>${ul(lead[m.key] || ['\u2014'])}
+      <h4>Supports</h4>${ul(supp[m.key] || ['\u2014'])}
+    </article>`;
+  }).join('');
+})();
+
+$('#matrix-body').innerHTML = MATRIX.map(m => `<tr>
+  <td><b>${m.ids}</b></td><td><b>${esc(m.act)}</b></td><td>${lf(m.who)}</td><td>${esc(m.role)}</td>
+  <td>${m.support === 'all' ? 'All members' : m.support.map(lf).join('<br>')}</td></tr>`).join('');
+
+/* ---------- Laboratory Exercise 4: Project Communication Plan ---------- */
+(function(){
+  const nm = k => MEM[k] ? lf(k) : esc(k);
+  $('#comm-intro').textContent = COMM_INTRO;
+  $('#comm-note').textContent = COMM_NOTE;
+  $('#stake-body').innerHTML = STAKEHOLDERS.map(s => `<tr>
+    <td><b>${esc(s.who)}</b></td><td>${s.key ? lf(s.key) : esc(s.name)}</td><td>${esc(s.role)}</td>
+    <td><span class="tag type">${esc(s.type)}</span></td></tr>`).join('');
+  $('#comm-obj-list').innerHTML = COMM_OBJECTIVES.map(o => `<li>${esc(o)}</li>`).join('');
+  $('#cm-body').innerHTML = COMM_MATRIX.map(r => `<tr>
+    <td><b>${esc(r.to)}</b></td><td>${esc(r.info)}</td><td>${esc(r.method)}</td><td>${esc(r.freq)}</td>
+    <td>${r.who === 'all' ? '<b>All team members</b><br><span class="muted-role">Each reports on their own tasks</span>' : nm(r.who) + '<br><span class="muted-role">' + esc(MEM[r.who].role) + '</span>'}</td></tr>`).join('');
+  $('#meth-body').innerHTML = COMM_METHODS.map(m => `<tr>
+    <td><b>${esc(m.method)}</b></td><td>${esc(m.purpose)}</td>
+    <td><span class="tag type">${esc(m.type)}</span></td><td>${esc(m.form)}</td></tr>`).join('');
+  $('#lab4-note').textContent = `${LAB4.title} \u2022 ${LAB4.section}`;
+})();
+
+/* ---------- Laboratory Exercise 5: Project Budget ---------- */
+(function(){
+  const round2 = n => Math.round(n * 100) / 100;
+  const peso = n => '\u20b1' + n.toLocaleString('en-PH', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  const num  = n => n.toLocaleString('en-PH');
+  const src  = s => (s.url ? `<a href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.name)}</a>` : esc(s.name));
+  const foot = (cols, label, total) => `<tr class="sub-total"><td colspan="${cols}">${label}</td><td class="num">${peso(total)}</td><td></td></tr>`;
+
+  // 1. Human resources
+  const hr = HR_BUDGET.map(r => {
+    const daily = round2(r.monthly / BUDGET.workingDaysPerMonth);
+    return Object.assign({}, r, { daily, total: round2(r.staff * daily * r.days) });
+  });
+  const hrTotal = round2(hr.reduce((a, r) => a + r.total, 0));
+  $('#hr-body').innerHTML = hr.map((r, i) => `<tr>
+    <td>${i + 1}</td>
+    <td><b>${esc(r.role)}</b><br><span class="muted-role">${lf(r.key)} &bull; Activities: ${esc(r.acts)}</span></td>
+    <td class="num">${r.staff}</td><td class="num">${peso(r.monthly)}</td><td class="num">${peso(r.daily)}</td>
+    <td class="num">${r.days}</td><td class="num">${peso(r.total)}</td><td>${src(r.src)}</td></tr>`).join('');
+  $('#hr-foot').innerHTML = `<tr class="sub-total"><td colspan="2">Total human resource budget</td>
+    <td class="num">${hr.reduce((a, r) => a + r.staff, 0)}</td><td></td><td></td>
+    <td class="num">${hr.reduce((a, r) => a + r.days, 0)}</td><td class="num">${peso(hrTotal)}</td><td></td></tr>`;
+
+  // 2. Consumables
+  const con = CONSUMABLES.map(r => Object.assign({}, r, { total: round2(r.qty * r.cost) }));
+  const conTotal = round2(con.reduce((a, r) => a + r.total, 0));
+  $('#con-body').innerHTML = con.map((r, i) => `<tr>
+    <td>${i + 1}</td><td><b>${esc(r.item)}</b></td><td>${esc(r.desc)}</td><td>${esc(r.unit)}</td>
+    <td class="num">${num(r.qty)}</td><td class="num">${peso(r.cost)}</td><td class="num">${peso(r.total)}</td><td>${src(r.src)}</td></tr>`).join('');
+  $('#con-foot').innerHTML = foot(6, 'Total consumables and materials', conTotal);
+
+  // 3. Equipment and tools
+  const eq = EQUIPMENT.map(r => Object.assign({}, r, { total: round2(r.qty * r.cost) }));
+  const eqTotal = round2(eq.reduce((a, r) => a + r.total, 0));
+  $('#eq-body').innerHTML = eq.map((r, i) => `<tr>
+    <td>${i + 1}</td><td><b>${esc(r.item)}</b></td><td>${esc(r.desc)}</td>
+    <td class="num">${num(r.qty)}</td><td class="num">${peso(r.cost)}</td><td class="num">${peso(r.total)}</td><td>${src(r.src)}</td></tr>`).join('');
+  $('#eq-foot').innerHTML = foot(5, 'Total equipment and tools', eqTotal);
+
+  // 4. Utilities and subscriptions
+  const ut = UTILITIES.map(r => Object.assign({}, r, { total: round2(r.months * r.per) }));
+  const utTotal = round2(ut.reduce((a, r) => a + r.total, 0));
+  $('#ut-body').innerHTML = ut.map((r, i) => `<tr>
+    <td>${i + 1}</td><td><b>${esc(r.item)}</b></td><td>${esc(r.desc)}</td>
+    <td class="num">${r.months} ${r.months === 1 ? 'month' : 'months'}</td><td class="num">${r.per === 0 ? 'Free' : peso(r.per)}</td>
+    <td class="num">${peso(r.total)}</td><td>${src(r.src)}</td></tr>`).join('');
+  $('#ut-foot').innerHTML = foot(5, 'Total utilities and subscriptions', utTotal);
+
+  // 5. Total budget summary (always computed from the four totals above)
+  const grand = round2(hrTotal + conTotal + eqTotal + utTotal);
+  const rows = [
+    ['Human resources', hrTotal, '#hr-budget'],
+    ['Consumables and materials', conTotal, '#consumables'],
+    ['Equipment and tools', eqTotal, '#equipment'],
+    ['Utilities and subscriptions', utTotal, '#utilities']
+  ];
+  $('#sum-body').innerHTML = rows.map(r => {
+    const pct = grand ? (r[1] / grand * 100) : 0;
+    return `<tr><td><b>${r[0]}</b></td><td class="num">${peso(r[1])}</td>
+      <td><div class="share"><div class="share-bar"><span style="width:${pct.toFixed(1)}%"></span></div><span class="share-pct">${pct.toFixed(1)}%</span></div></td></tr>`;
+  }).join('');
+  $('#sum-foot').innerHTML = `<tr class="grand-total"><td>TOTAL PROJECT BUDGET</td><td class="num">${peso(grand)}</td><td></td></tr>`;
+
+  $('#bud-intro').textContent = BUDGET.intro;
+  $('#bud-note').textContent = BUDGET.note;
+  $('#lab5-note').textContent = `${LAB5.title} \u2022 ${LAB5.section}`;
+})();
+
+/* ---------- page router ---------- */
+function updatePageRoute(){
+  // Five pages. Old section ids still work as links: they open the right page and scroll to that section.
+  const PAGE_OF = {
+    home:'home', overview:'home', features:'home',
+    schedule:'schedule', wbs:'schedule', sequencing:'schedule', durations:'schedule', gantt:'schedule',
+    'project-team':'project-team', assessment:'project-team', roles:'project-team', orgchart:'project-team',
+    responsibilities:'project-team', team:'project-team',
+    communication:'communication', 'comm-plan':'communication', stakeholders:'communication',
+    'comm-objectives':'communication', 'comm-matrix':'communication', 'comm-methods':'communication',
+    budget:'budget', 'budget-intro':'budget', 'hr-budget':'budget', consumables:'budget', equipment:'budget',
+    utilities:'budget', 'budget-summary':'budget'
+  };
+  const hash = (window.location.hash || '#home').replace('#', '') || 'home';
+  const activeId = PAGE_OF[hash] || 'home';
+  const subTarget = (hash !== activeId && PAGE_OF[hash]) ? document.getElementById(hash) : null;
+
+  document.querySelectorAll('.page-section').forEach(sec => {
+    sec.classList.toggle('active', sec.id === activeId);
+  });
+
+  document.querySelectorAll('nav.top ul a').forEach(link => {
+    const href = (link.getAttribute('href') || '').replace('#', '');
+    link.classList.toggle('active', href === activeId);
+  });
+
+  const mainEl = document.querySelector('main');
+  if (subTarget && mainEl) {
+    mainEl.scrollTo({ top: Math.max(subTarget.offsetTop - 12, 0), behavior: 'smooth' });
+  } else if (mainEl) {
+    mainEl.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+}
+
+window.addEventListener('hashchange', updatePageRoute);
+window.addEventListener('DOMContentLoaded', updatePageRoute);
+updatePageRoute();
+
+/* ---------- image lightbox & cropper ---------- */
+(function(){
+  const modal = $('#img-modal');
+  const modalImg = $('#modal-img');
+  const closeBtn = $('#modal-close-btn');
+  const slider = $('#crop-slider');
+  const controls = $('#modal-controls');
+  const zoomInBtn = $('#zoom-in-btn');
+  const zoomOutBtn = $('#zoom-out-btn');
+  const resetZoomBtn = $('#reset-zoom-btn');
+
+  let currentTargetImg = null;
+  let currentZoom = 1;
+
+  function openModal(imgSrc, targetImgEl, isAvatar){
+    modalImg.src = imgSrc;
+    modalImg.style.transform = 'scale(1)';
+    currentZoom = 1;
+    currentTargetImg = targetImgEl;
+
+    if (isAvatar && targetImgEl) {
+      controls.style.display = 'flex';
+      const posMatch = targetImgEl.style.objectPosition ? targetImgEl.style.objectPosition.match(/(\d+)%/) : null;
+      slider.value = posMatch ? posMatch[1] : 42;
+    } else {
+      controls.style.display = 'none';
+    }
+
+    modal.classList.add('active');
+    modal.setAttribute('aria-hidden', 'false');
+  }
+
+  function closeModal(){
+    modal.classList.remove('active');
+    modal.setAttribute('aria-hidden', 'true');
+    currentTargetImg = null;
+  }
+
+  document.addEventListener('click', function(e){
+    const avatarImg = e.target.closest('.avatar img');
+    const teamImg = e.target.closest('.team-photo img');
+
+    if (avatarImg) {
+      openModal(avatarImg.src, avatarImg, true);
+    } else if (teamImg) {
+      openModal(teamImg.src, teamImg, false);
+    }
+  });
+
+  if (slider) {
+    slider.addEventListener('input', function(){
+      if (currentTargetImg) {
+        currentTargetImg.style.objectPosition = `center ${slider.value}%`;
+      }
+    });
+  }
+
+  if (zoomInBtn) {
+    zoomInBtn.addEventListener('click', function(){
+      currentZoom = Math.min(3, currentZoom + 0.25);
+      modalImg.style.transform = `scale(${currentZoom})`;
+    });
+  }
+
+  if (zoomOutBtn) {
+    zoomOutBtn.addEventListener('click', function(){
+      currentZoom = Math.max(0.5, currentZoom - 0.25);
+      modalImg.style.transform = `scale(${currentZoom})`;
+    });
+  }
+
+  if (resetZoomBtn) {
+    resetZoomBtn.addEventListener('click', function(){
+      currentZoom = 1;
+      modalImg.style.transform = `scale(1)`;
+    });
+  }
+
+  if (closeBtn) closeBtn.addEventListener('click', closeModal);
+  if (modal) {
+    modal.addEventListener('click', function(e){
+      if (e.target === modal) closeModal();
+    });
+  }
+  document.addEventListener('keydown', function(e){
+    if (e.key === 'Escape' && modal && modal.classList.contains('active')) closeModal();
+  });
+})();
+</script>
+</body>
+</html>
