@@ -261,7 +261,6 @@
         <tbody id="meth-body"></tbody>
       </table>
     </div>
-    <p class="note" id="lab4-note"></p>
   </div>
 </section>
 
@@ -344,7 +343,7 @@
         <tfoot id="sum-foot"></tfoot>
       </table>
     </div>
-    <p class="note" id="lab5-note"></p>
+
   </div>
 </section>
 
@@ -951,7 +950,6 @@ $('#matrix-body').innerHTML = MATRIX.map(m => `<tr>
   $('#meth-body').innerHTML = COMM_METHODS.map(m => `<tr>
     <td><b>${esc(m.method)}</b></td><td>${esc(m.purpose)}</td>
     <td><span class="tag type">${esc(m.type)}</span></td><td>${esc(m.form)}</td></tr>`).join('');
-  $('#lab4-note').textContent = `${LAB4.title} \u2022 ${LAB4.section}`;
 })();
 
 /* ---------- Laboratory Exercise 5: Project Budget ---------- */
@@ -1019,7 +1017,6 @@ $('#matrix-body').innerHTML = MATRIX.map(m => `<tr>
 
   $('#bud-intro').textContent = BUDGET.intro;
   $('#bud-note').textContent = BUDGET.note;
-  $('#lab5-note').textContent = `${LAB5.title} \u2022 ${LAB5.section}`;
 })();
 
 /* ---------- page router ---------- */
